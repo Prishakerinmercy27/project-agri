@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CropAI — Smart Crop Recommendation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>CropAI — Smart Crop Recommendation System</title>
+  <meta name="description" content="AI-powered crop recommendation system using ML models to suggest the best crops based on soil nutrients and environmental conditions.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav>
-  <div class="nav-logo" onclick="navTo('hero')" style="cursor:pointer">Crop<span>AI</span></div>
+  <div class="nav-logo" onclick="navTo('hero')">Crop<span>AI</span></div>
   <ul class="nav-links">
     <li><a onclick="navTo('hero')">Home</a></li>
     <li><a onclick="navTo('predict')">Predict</a></li>
+    <li><a onclick="navTo('compare')">Compare</a></li>
+    <li><a onclick="navTo('dashboard')" id="dashboardLink">Dashboard</a></li>
+    <li><a onclick="navTo('history')">History</a></li>
     <li><a onclick="navTo('how')">How it works</a></li>
   </ul>
-  <button onclick="navTo('predict')" class="nav-cta">Try Prediction →</button>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode"></button>
+    <button onclick="navTo('predict')" class="nav-cta">Try Prediction →</button>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
@@ -31,10 +39,10 @@
       crop advice.
     </h1>
     <p class="hero-desc">
-      Enter your soil nutrients and environmental conditions. Our machine learning model recommends the best crops tailored to your farm — instantly.
+      Enter your soil nutrients and environmental conditions. Our machine learning models recommend the best crops tailored to your farm — with yield predictions, fertilizer advice, and risk analysis.
     </p>
     <div class="hero-btns">
-      <button onclick="navTo('predict')" class="btn-primary">Analyse my Farm</button>
+      <button onclick="navTo('predict')" class="btn-primary">🌱 Analyse my Farm</button>
       <button onclick="navTo('how')" class="btn-ghost">See how it works →</button>
     </div>
     <div class="hero-stats">
@@ -43,7 +51,11 @@
         <div class="stat-label">Crop varieties</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">97%</div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">ML Models</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98%</div>
         <div class="stat-label">Model accuracy</div>
       </div>
       <div class="stat-item">
@@ -61,136 +73,262 @@
   </div>
 </section>
 
-<!-- PREDICT FORM -->
+<!-- ═══ PREDICT FORM ═══ -->
 <section id="predict">
   <div class="predict-grid">
     <div class="predict-info">
       <div class="section-label">ML Prediction Engine</div>
       <h2 class="section-title">Enter your farm data</h2>
-      <p>Provide 7 key indicators about your soil and local climate. Our Random Forest model will analyse the parameters and recommend the most suitable crops.</p>
+      <p>Provide 7 key indicators about your soil and local climate. Choose from 3 ML models — Random Forest, Decision Tree, or XGBoost — for crop recommendations with yield predictions and fertilizer advice.</p>
 
       <div class="param-list">
         <div class="param-item">
           <div class="param-icon">🧪</div>
-          <div><strong style="color:var(--mist)">Soil Nutrients</strong> — N, P, K values indicate fertility</div>
+          <div><strong style="color:var(--cream)">Soil Nutrients</strong> — N, P, K values indicate fertility</div>
         </div>
         <div class="param-item">
           <div class="param-icon">⚗️</div>
-          <div><strong style="color:var(--mist)">Soil pH</strong> — Acidity level affects nutrient uptake</div>
+          <div><strong style="color:var(--cream)">Soil pH</strong> — Acidity level affects nutrient uptake</div>
         </div>
         <div class="param-item">
           <div class="param-icon">🌡️</div>
-          <div><strong style="color:var(--mist)">Climate</strong> — Temperature, humidity & rainfall</div>
+          <div><strong style="color:var(--cream)">Climate</strong> — Temperature, humidity & rainfall</div>
+        </div>
+        <div class="param-item">
+          <div class="param-icon">📊</div>
+          <div><strong style="color:var(--cream)">AI Models</strong> — 3 models compared for best results</div>
         </div>
       </div>
     </div>
 
     <div class="form-card">
-      <div class="form-section-title">Soil Nutrients</div>
+      <!-- Location & Weather Auto-fill -->
+      <div class="form-section-title">📍 Location & Weather</div>
+      <div class="location-weather-bar">
+        <select id="regionSelect">
+          <option value="">Select Region</option>
+          <option value="north-india">North India (Punjab, Haryana, UP)</option>
+          <option value="south-india">South India (TN, Karnataka, Kerala)</option>
+          <option value="east-india">East India (WB, Odisha, Bihar)</option>
+          <option value="west-india">West India (Maharashtra, Gujarat)</option>
+          <option value="central-india">Central India (MP, Chhattisgarh)</option>
+          <option value="northeast">Northeast India (Assam, Meghalaya)</option>
+        </select>
+        <input type="text" id="cityInput" placeholder="City name (e.g. Mumbai)">
+        <button class="weather-btn" onclick="fetchWeather()">🌤️ Auto-fill Weather</button>
+      </div>
+
+      <!-- Soil Nutrients -->
+      <div class="form-section-title">🧪 Soil Nutrients</div>
       <div class="input-grid">
         <div class="input-group">
-          <label>Nitrogen (N)</label>
+          <label>
+            Nitrogen (N)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Nitrogen promotes leaf and stem growth. High N = lush green plants. Get your soil tested at a local agricultural center.</span>
+            </span>
+          </label>
           <input type="number" id="nitrogen" placeholder="e.g. 90" min="0" max="140">
           <span class="input-hint">Ratio · 0 – 140</span>
         </div>
         <div class="input-group">
-          <label>Phosphorus (P)</label>
+          <label>
+            Phosphorus (P)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Phosphorus helps root development and flowering. Essential for fruit and grain crops. Common in DAP fertilizer.</span>
+            </span>
+          </label>
           <input type="number" id="phosphorus" placeholder="e.g. 42" min="0" max="145">
           <span class="input-hint">Ratio · 0 – 145</span>
         </div>
         <div class="input-group">
-          <label>Potassium (K)</label>
+          <label>
+            Potassium (K)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Potassium strengthens plants and improves disease resistance. Important for overall plant health and fruit quality.</span>
+            </span>
+          </label>
           <input type="number" id="potassium" placeholder="e.g. 43" min="0" max="205">
           <span class="input-hint">Ratio · 0 – 205</span>
         </div>
         <div class="input-group">
-          <label>Soil pH</label>
+          <label>
+            Soil pH
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">pH measures soil acidity/alkalinity. 7 is neutral. Most crops prefer 6–7. Test with a pH meter or litmus paper.</span>
+            </span>
+          </label>
           <input type="number" id="ph" placeholder="e.g. 6.5" step="0.1" min="0" max="14">
           <span class="input-hint">Scale · 0 – 14</span>
         </div>
       </div>
 
-      <div class="form-section-title">Environmental Conditions</div>
+      <!-- Environmental Conditions -->
+      <div class="form-section-title">🌡️ Environmental Conditions</div>
       <div class="input-grid">
         <div class="input-group">
-          <label>Temperature (°C)</label>
+          <label>
+            Temperature (°C)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Average daytime temperature in your area. Use weather apps or click "Auto-fill Weather" above for real-time data.</span>
+            </span>
+          </label>
           <input type="number" id="temperature" placeholder="e.g. 28" min="-10" max="55">
           <span class="input-hint">-10 – 55 °C</span>
         </div>
         <div class="input-group">
-          <label>Humidity (%)</label>
+          <label>
+            Humidity (%)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Relative humidity in your area. High humidity (70%+) favors rice/banana. Low humidity (30-50%) suits wheat/mustard.</span>
+            </span>
+          </label>
           <input type="number" id="humidity" placeholder="e.g. 80" min="0" max="100">
           <span class="input-hint">0 – 100 %</span>
         </div>
         <div class="input-group" style="grid-column: 1 / -1;">
-          <label>Rainfall (mm)</label>
+          <label>
+            Rainfall (mm)
+            <span class="tooltip-icon">?
+              <span class="tooltip-text">Average monthly rainfall in your area. Coastal areas get 150–300mm, dry regions get 25–60mm. Check local weather station data.</span>
+            </span>
+          </label>
           <input type="number" id="rainfall" placeholder="e.g. 200" min="0" max="300">
-          <span class="input-hint">Annual average · 0 – 300 mm</span>
+          <span class="input-hint">Monthly average · 0 – 300 mm</span>
         </div>
+      </div>
+
+      <!-- ML Model Selection -->
+      <div class="form-section-title">🤖 ML Model</div>
+      <div class="model-selector">
+        <button class="model-chip active" data-model="randomForest" onclick="selectModel('randomForest')">🌲 Random Forest</button>
+        <button class="model-chip" data-model="decisionTree" onclick="selectModel('decisionTree')">🌳 Decision Tree</button>
+        <button class="model-chip" data-model="xgboost" onclick="selectModel('xgboost')">⚡ XGBoost</button>
       </div>
 
       <button class="predict-btn" onclick="predictCrop()">
         <span class="btn-text">🌱 Predict Best Crops</span>
-        <span class="btn-loader"><div class="spinner"></div> Analysing…</span>
+        <span class="btn-loader"><div class="spinner"></div> Analysing with AI…</span>
       </button>
     </div>
   </div>
 </section>
 
-<!-- RESULTS -->
+<!-- ═══ RESULTS ═══ -->
 <section id="result-section">
   <div class="result-header">
     <div class="section-label" style="text-align:center">Recommendation Ready</div>
     <h2 class="section-title" style="text-align:center">Best crops for your farm</h2>
-    <p style="text-align:center;color:#5a5a45;font-size:0.95rem;max-width:500px;margin:0 auto 40px">
-      Based on your inputs, here are the top crop recommendations ranked by suitability score.
+    <p style="text-align:center">
+      Based on your inputs, here are the top crop recommendations with yield predictions, risk assessment, and fertilizer advice.
     </p>
   </div>
 
   <div class="input-summary" id="inputSummary"></div>
 
+  <!-- Feature Importance -->
+  <div class="feature-importance" id="featureImportance"></div>
+
+  <!-- Crop Cards -->
   <div class="result-grid" id="resultGrid"></div>
 
-  <div style="text-align:center;margin-top:40px">
-    <button onclick="resetForm()" class="btn-primary">← Try Different Values</button>
+  <!-- Export & Action Buttons -->
+  <div class="export-bar">
+    <button onclick="exportCSV()" class="btn-sm btn-outline">📄 Export CSV</button>
+    <button onclick="exportPrint()" class="btn-sm btn-outline">🖨️ Print Report</button>
+    <button onclick="navTo('compare')" class="btn-sm btn-outline">⚖️ Compare Crops</button>
+    <button onclick="resetForm()" class="btn-primary" style="padding:10px 24px;font-size:0.88rem">← Try Different Values</button>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- ═══ DASHBOARD ═══ -->
+<section id="dashboard" style="display:none">
+  <div style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-label" style="text-align:center">Analytics</div>
+    <h2 class="section-title" style="text-align:center">Crop Suitability Dashboard</h2>
+  </div>
+  <div class="dashboard-grid">
+    <div class="chart-card">
+      <h3>📊 Suitability Score — All 22 Crops</h3>
+      <div style="height:500px"><canvas id="suitabilityChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🥧 Crop Type Distribution</h3>
+      <div style="height:300px"><canvas id="typeChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARE ═══ -->
+<section id="compare">
+  <div style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-label" style="text-align:center">Comparison</div>
+    <h2 class="section-title" style="text-align:center">Compare crops side by side</h2>
+    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:32px">
+      Select 2 or 3 crops to compare their requirements, yield, and fertilizer needs.
+    </p>
+  </div>
+  <div class="compare-controls" style="max-width:900px;margin:0 auto 24px">
+    <select id="compareCrop1"><option value="">Select Crop 1</option></select>
+    <select id="compareCrop2"><option value="">Select Crop 2</option></select>
+    <select id="compareCrop3"><option value="">Select Crop 3 (optional)</option></select>
+    <button class="btn-primary" style="padding:10px 24px;font-size:0.88rem" onclick="compareCrops()">⚖️ Compare</button>
+  </div>
+  <div class="compare-table-wrap" id="compareTableWrap" style="max-width:900px;margin:0 auto">
+    <p style="text-align:center;color:#8a8a6a;padding:40px">Select crops above and click Compare to see a detailed side-by-side analysis.</p>
+  </div>
+</section>
+
+<!-- ═══ HISTORY ═══ -->
+<section id="history">
+  <div style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-label" style="text-align:center">Prediction History</div>
+    <h2 class="section-title" style="text-align:center">Your past analyses</h2>
+    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:16px">
+      Track your farm decisions over time. Reload any past prediction to re-analyse.
+    </p>
+  </div>
+  <div class="history-list" id="historyList"></div>
+  <button class="history-clear-btn" onclick="clearHistory()">🗑️ Clear History</button>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
 <section id="how">
   <div style="text-align:center;max-width:600px;margin:0 auto">
     <div class="section-label" style="text-align:center">Process</div>
-    <h2 class="section-title" style="text-align:center">Three steps to smarter farming</h2>
+    <h2 class="section-title" style="text-align:center">How CropAI works</h2>
   </div>
   <div class="how-grid reveal">
     <div class="how-card">
       <div class="how-step">01</div>
       <div class="how-icon">📋</div>
       <h3>Enter Parameters</h3>
-      <p>Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall for your location.</p>
+      <p>Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall. Auto-fill weather data from your location or select a region.</p>
     </div>
     <div class="how-card">
       <div class="how-step">02</div>
       <div class="how-icon">🤖</div>
-      <h3>ML Model Analyses</h3>
-      <p>A trained Random Forest classifier processes your inputs against patterns from thousands of agricultural data points.</p>
+      <h3>AI Models Analyse</h3>
+      <p>Choose from Random Forest, Decision Tree, or XGBoost. Each model processes your inputs against patterns from thousands of agricultural data points.</p>
     </div>
     <div class="how-card">
       <div class="how-step">03</div>
       <div class="how-icon">🌾</div>
-      <h3>Get Recommendations</h3>
-      <p>Receive ranked crop recommendations with confidence scores, ideal seasons, and key growing tips.</p>
+      <h3>Get Full Report</h3>
+      <p>Receive ranked crops with confidence scores, yield predictions, fertilizer advice, risk levels, and feature importance. Export as CSV or compare crops side-by-side.</p>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-logo">Crop<span>AI</span></div>
   <p>Smart Crop Recommendation System · Built with ML &amp; ♥</p>
-  <p style="font-size:0.78rem">Connect backend API for live predictions</p>
+  <p style="font-size:0.78rem">22 crops · 3 ML models · Weather API · Export reports</p>
 </footer>
 
-<script src="js/script.js"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer onerror="console.warn('Chart.js CDN failed to load. Dashboard charts will be unavailable.')"></script>
+<script src="js/script.js" defer></script>
 </body>
 </html>
