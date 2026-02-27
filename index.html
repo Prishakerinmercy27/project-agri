@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropAI — Smart Crop Recommendation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="navTo('hero')" style="cursor:pointer">Crop<span>AI</span></div>
+  <ul class="nav-links">
+    <li><a onclick="navTo('hero')">Home</a></li>
+    <li><a onclick="navTo('predict')">Predict</a></li>
+    <li><a onclick="navTo('how')">How it works</a></li>
+  </ul>
+  <button onclick="navTo('predict')" class="nav-cta">Try Prediction →</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">AI-Powered Agriculture</div>
+    <h1>
+      Grow <em>smarter</em><br>
+      with <span class="underline-accent">data-driven</span><br>
+      crop advice.
+    </h1>
+    <p class="hero-desc">
+      Enter your soil nutrients and environmental conditions. Our machine learning model recommends the best crops tailored to your farm — instantly.
+    </p>
+    <div class="hero-btns">
+      <button onclick="navTo('predict')" class="btn-primary">Analyse my Farm</button>
+      <button onclick="navTo('how')" class="btn-ghost">See how it works →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">22+</div>
+        <div class="stat-label">Crop varieties</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">97%</div>
+        <div class="stat-label">Model accuracy</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Parameters analysed</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+    <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+    <div class="crop-orb">
+      <div class="crop-orb-inner">🌾</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREDICT FORM -->
+<section id="predict">
+  <div class="predict-grid">
+    <div class="predict-info">
+      <div class="section-label">ML Prediction Engine</div>
+      <h2 class="section-title">Enter your farm data</h2>
+      <p>Provide 7 key indicators about your soil and local climate. Our Random Forest model will analyse the parameters and recommend the most suitable crops.</p>
+
+      <div class="param-list">
+        <div class="param-item">
+          <div class="param-icon">🧪</div>
+          <div><strong style="color:var(--mist)">Soil Nutrients</strong> — N, P, K values indicate fertility</div>
+        </div>
+        <div class="param-item">
+          <div class="param-icon">⚗️</div>
+          <div><strong style="color:var(--mist)">Soil pH</strong> — Acidity level affects nutrient uptake</div>
+        </div>
+        <div class="param-item">
+          <div class="param-icon">🌡️</div>
+          <div><strong style="color:var(--mist)">Climate</strong> — Temperature, humidity & rainfall</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-section-title">Soil Nutrients</div>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Nitrogen (N)</label>
+          <input type="number" id="nitrogen" placeholder="e.g. 90" min="0" max="140">
+          <span class="input-hint">Ratio · 0 – 140</span>
+        </div>
+        <div class="input-group">
+          <label>Phosphorus (P)</label>
+          <input type="number" id="phosphorus" placeholder="e.g. 42" min="0" max="145">
+          <span class="input-hint">Ratio · 0 – 145</span>
+        </div>
+        <div class="input-group">
+          <label>Potassium (K)</label>
+          <input type="number" id="potassium" placeholder="e.g. 43" min="0" max="205">
+          <span class="input-hint">Ratio · 0 – 205</span>
+        </div>
+        <div class="input-group">
+          <label>Soil pH</label>
+          <input type="number" id="ph" placeholder="e.g. 6.5" step="0.1" min="0" max="14">
+          <span class="input-hint">Scale · 0 – 14</span>
+        </div>
+      </div>
+
+      <div class="form-section-title">Environmental Conditions</div>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Temperature (°C)</label>
+          <input type="number" id="temperature" placeholder="e.g. 28" min="-10" max="55">
+          <span class="input-hint">-10 – 55 °C</span>
+        </div>
+        <div class="input-group">
+          <label>Humidity (%)</label>
+          <input type="number" id="humidity" placeholder="e.g. 80" min="0" max="100">
+          <span class="input-hint">0 – 100 %</span>
+        </div>
+        <div class="input-group" style="grid-column: 1 / -1;">
+          <label>Rainfall (mm)</label>
+          <input type="number" id="rainfall" placeholder="e.g. 200" min="0" max="300">
+          <span class="input-hint">Annual average · 0 – 300 mm</span>
+        </div>
+      </div>
+
+      <button class="predict-btn" onclick="predictCrop()">
+        <span class="btn-text">🌱 Predict Best Crops</span>
+        <span class="btn-loader"><div class="spinner"></div> Analysing…</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="result-section">
+  <div class="result-header">
+    <div class="section-label" style="text-align:center">Recommendation Ready</div>
+    <h2 class="section-title" style="text-align:center">Best crops for your farm</h2>
+    <p style="text-align:center;color:#5a5a45;font-size:0.95rem;max-width:500px;margin:0 auto 40px">
+      Based on your inputs, here are the top crop recommendations ranked by suitability score.
+    </p>
+  </div>
+
+  <div class="input-summary" id="inputSummary"></div>
+
+  <div class="result-grid" id="resultGrid"></div>
+
+  <div style="text-align:center;margin-top:40px">
+    <button onclick="resetForm()" class="btn-primary">← Try Different Values</button>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-label" style="text-align:center">Process</div>
+    <h2 class="section-title" style="text-align:center">Three steps to smarter farming</h2>
+  </div>
+  <div class="how-grid reveal">
+    <div class="how-card">
+      <div class="how-step">01</div>
+      <div class="how-icon">📋</div>
+      <h3>Enter Parameters</h3>
+      <p>Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall for your location.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-step">02</div>
+      <div class="how-icon">🤖</div>
+      <h3>ML Model Analyses</h3>
+      <p>A trained Random Forest classifier processes your inputs against patterns from thousands of agricultural data points.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-step">03</div>
+      <div class="how-icon">🌾</div>
+      <h3>Get Recommendations</h3>
+      <p>Receive ranked crop recommendations with confidence scores, ideal seasons, and key growing tips.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Crop<span>AI</span></div>
+  <p>Smart Crop Recommendation System · Built with ML &amp; ♥</p>
+  <p style="font-size:0.78rem">Connect backend API for live predictions</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
