@@ -230,6 +230,9 @@ let appState = {
   lastResults: null,
   lastInputs: null,
   charts: {},
+  inputMode: 'lab',     // 'lab' or 'guided'
+  guidedStep: 1,
+  guidedTotalSteps: 7,
 };
 
 // ═══ Dark Mode ═══
@@ -943,6 +946,241 @@ function exportPrint() {
   showNotification('🖨️ Print dialog opened');
 }
 
+// ═══ Smart Farmer Assistant (Guided Mode) ═══
+
+function switchMode(mode) {
+  appState.inputMode = mode;
+  const labMode = document.getElementById('labMode');
+  const guidedMode = document.getElementById('guidedMode');
+  const labBtn = document.getElementById('labModeBtn');
+  const guidedBtn = document.getElementById('guidedModeBtn');
+
+  if (mode === 'lab') {
+    labMode.style.display = 'block';
+    guidedMode.style.display = 'none';
+    labBtn.classList.add('active');
+    guidedBtn.classList.remove('active');
+  } else {
+    labMode.style.display = 'none';
+    guidedMode.style.display = 'block';
+    labBtn.classList.remove('active');
+    guidedBtn.classList.add('active');
+    // Reset guided to step 1
+    appState.guidedStep = 1;
+    updateGuidedUI();
+  }
+}
+
+function updateGuidedUI() {
+  const step = appState.guidedStep;
+  const total = appState.guidedTotalSteps;
+
+  // Show/hide steps
+  document.querySelectorAll('.guided-step').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.step) === step);
+  });
+
+  // Update progress bar
+  const progressBar = document.getElementById('guidedProgressBar');
+  if (progressBar) progressBar.style.width = ((step / total) * 100) + '%';
+
+  // Update step label
+  const stepLabel = document.getElementById('guidedStepLabel');
+  if (stepLabel) stepLabel.textContent = `Step ${step} of ${total}`;
+
+  // Show/hide prev button
+  const prevBtn = document.getElementById('guidedPrevBtn');
+  if (prevBtn) prevBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+
+  // Update next button text on last step
+  const nextBtn = document.getElementById('guidedNextBtn');
+  if (nextBtn) {
+    if (step === total) {
+      nextBtn.textContent = '✨ See Estimated Values';
+    } else {
+      nextBtn.textContent = 'Next →';
+    }
+  }
+
+  // Show/hide preview
+  const preview = document.getElementById('guidedPreview');
+  if (preview) preview.style.display = 'none';
+}
+
+function guidedNext() {
+  // Validate current step has a selection
+  const stepName = getGuidedRadioName(appState.guidedStep);
+  const selected = document.querySelector(`input[name="${stepName}"]:checked`);
+  if (!selected) {
+    showNotification('⚠️ Please select an option before continuing.', 'error');
+    return;
+  }
+
+  if (appState.guidedStep < appState.guidedTotalSteps) {
+    appState.guidedStep++;
+    updateGuidedUI();
+  } else {
+    // All steps done — show preview
+    showGuidedPreview();
+  }
+}
+
+function guidedPrev() {
+  if (appState.guidedStep > 1) {
+    appState.guidedStep--;
+    updateGuidedUI();
+    // Hide preview if going back
+    const preview = document.getElementById('guidedPreview');
+    if (preview) preview.style.display = 'none';
+  }
+}
+
+function getGuidedRadioName(step) {
+  const names = { 1: 'guided_n', 2: 'guided_p', 3: 'guided_k', 4: 'guided_ph', 5: 'guided_t', 6: 'guided_h', 7: 'guided_r' };
+  return names[step];
+}
+
+// ── Convert guided answers → numeric values ──
+function estimateNitrogen(answer) {
+  const values = { low: 30, medium: 60, high: 90 };
+  return values[answer] || 60;
+}
+
+function estimatePhosphorus(answer) {
+  const values = { low: 25, medium: 50, high: 85 };
+  return values[answer] || 50;
+}
+
+function estimatePotassium(answer) {
+  const values = { low: 25, medium: 55, high: 95 };
+  return values[answer] || 55;
+}
+
+function estimatePH(answer) {
+  const values = { acidic: 5.5, neutral: 6.8, alkaline: 7.8 };
+  return values[answer] || 6.8;
+}
+
+function estimateTemperature(answer) {
+  const values = { cold: 18, moderate: 26, hot: 34 };
+  return values[answer] || 26;
+}
+
+function estimateHumidity(answer) {
+  const values = { dry: 35, moderate: 55, humid: 80 };
+  return values[answer] || 55;
+}
+
+function estimateRainfall(answer) {
+  const values = { low: 35, moderate: 80, heavy: 160 };
+  return values[answer] || 80;
+}
+
+function getGuidedValues() {
+  const getVal = (name) => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : null;
+  };
+
+  return {
+    n: estimateNitrogen(getVal('guided_n')),
+    p: estimatePhosphorus(getVal('guided_p')),
+    k: estimatePotassium(getVal('guided_k')),
+    ph: estimatePH(getVal('guided_ph')),
+    t: estimateTemperature(getVal('guided_t')),
+    h: estimateHumidity(getVal('guided_h')),
+    r: estimateRainfall(getVal('guided_r')),
+  };
+}
+
+function showGuidedPreview() {
+  // Check all steps are answered
+  for (let i = 1; i <= 7; i++) {
+    const name = getGuidedRadioName(i);
+    if (!document.querySelector(`input[name="${name}"]:checked`)) {
+      showNotification(`⚠️ Please answer all 7 questions. Missing step ${i}.`, 'error');
+      appState.guidedStep = i;
+      updateGuidedUI();
+      return;
+    }
+  }
+
+  const values = getGuidedValues();
+  const preview = document.getElementById('guidedPreview');
+  const grid = document.getElementById('guidedPreviewGrid');
+
+  const items = [
+    { key: 'Nitrogen', val: values.n, unit: '' },
+    { key: 'Phosphorus', val: values.p, unit: '' },
+    { key: 'Potassium', val: values.k, unit: '' },
+    { key: 'pH', val: values.ph, unit: '' },
+    { key: 'Temp', val: values.t, unit: '°C' },
+    { key: 'Humidity', val: values.h, unit: '%' },
+    { key: 'Rainfall', val: values.r, unit: 'mm' },
+  ];
+
+  grid.innerHTML = items.map(item => `
+    <div class="guided-preview-item">
+      <div class="guided-preview-val">${item.val}${item.unit}</div>
+      <div class="guided-preview-key">${item.key}</div>
+    </div>
+  `).join('');
+
+  // Hide all steps, show preview
+  document.querySelectorAll('.guided-step').forEach(el => el.classList.remove('active'));
+  document.querySelector('.guided-nav').style.display = 'none';
+  preview.style.display = 'block';
+
+  // Update progress to 100%
+  const progressBar = document.getElementById('guidedProgressBar');
+  if (progressBar) progressBar.style.width = '100%';
+  const stepLabel = document.getElementById('guidedStepLabel');
+  if (stepLabel) stepLabel.textContent = 'All steps completed ✓';
+}
+
+async function guidedPredict() {
+  const values = getGuidedValues();
+  const btn = document.querySelector('.guided-preview-actions .btn-primary');
+
+  try {
+    // Fill the lab mode inputs with estimated values (for history/state)
+    document.getElementById('nitrogen').value = values.n;
+    document.getElementById('phosphorus').value = values.p;
+    document.getElementById('potassium').value = values.k;
+    document.getElementById('ph').value = values.ph;
+    document.getElementById('temperature').value = values.t;
+    document.getElementById('humidity').value = values.h;
+    document.getElementById('rainfall').value = values.r;
+
+    if (btn) { btn.textContent = '⏳ Analysing...'; btn.disabled = true; }
+
+    await new Promise(r => setTimeout(r, 1800));
+
+    const inputs = {
+      n: String(values.n), p: String(values.p), k: String(values.k),
+      ph: String(values.ph), t: String(values.t), h: String(values.h), r: String(values.r),
+    };
+
+    const results = ruleBasedCrop(inputs);
+
+    if (btn) { btn.textContent = '🌱 Predict Best Crops'; btn.disabled = false; }
+
+    appState.lastResults = results;
+    appState.lastInputs = inputs;
+
+    renderResults(inputs, results);
+    saveToHistory(inputs, results);
+    populateCompareDropdowns();
+
+    showNotification('🌾 Smart Farmer Assistant — Prediction complete!');
+
+  } catch (err) {
+    console.error('Guided prediction error:', err);
+    alert('Something went wrong. Please try again.');
+    if (btn) { btn.textContent = '🌱 Predict Best Crops'; btn.disabled = false; }
+  }
+}
+
 // ═══ Navigation ═══
 function navTo(id) {
   const el = document.getElementById(id);
@@ -953,6 +1191,17 @@ function resetForm() {
   document.getElementById('result-section').classList.remove('visible');
   const dashboard = document.getElementById('dashboard');
   if (dashboard) dashboard.style.display = 'none';
+
+  // Reset guided mode if active
+  if (appState.inputMode === 'guided') {
+    appState.guidedStep = 1;
+    updateGuidedUI();
+    const guidedNav = document.querySelector('.guided-nav');
+    if (guidedNav) guidedNav.style.display = 'flex';
+    const preview = document.getElementById('guidedPreview');
+    if (preview) preview.style.display = 'none';
+  }
+
   setTimeout(() => navTo('predict'), 100);
 }
 

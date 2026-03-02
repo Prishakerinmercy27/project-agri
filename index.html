@@ -102,6 +102,318 @@
     </div>
 
     <div class="form-card">
+      <!-- Mode Toggle -->
+      <div class="mode-toggle-wrap">
+        <button class="mode-btn active" id="labModeBtn" onclick="switchMode('lab')">
+          <span class="mode-icon">🔬</span>
+          <span class="mode-label">Manual Lab Mode</span>
+          <span class="mode-desc">Enter exact soil test values</span>
+        </button>
+        <button class="mode-btn" id="guidedModeBtn" onclick="switchMode('guided')">
+          <span class="mode-icon">🌾</span>
+          <span class="mode-label">Smart Farmer Assistant</span>
+          <span class="mode-desc">Answer simple field questions</span>
+        </button>
+      </div>
+
+      <!-- ═══ GUIDED MODE ═══ -->
+      <div id="guidedMode" class="guided-mode" style="display:none">
+        <div class="guided-header">
+          <div class="guided-badge">🧠 AI Field Diagnosis</div>
+          <p class="guided-subtitle">Answer simple questions about your field — we'll estimate soil values using AI</p>
+          <div class="guided-progress">
+            <div class="guided-progress-bar" id="guidedProgressBar"></div>
+          </div>
+          <div class="guided-step-label" id="guidedStepLabel">Step 1 of 7</div>
+        </div>
+
+        <!-- Step 1: Nitrogen -->
+        <div class="guided-step active" data-step="1">
+          <div class="guided-question-header">
+            <span class="guided-step-num">01</span>
+            <h3>🌿 Nitrogen (N) — Leaf Health</h3>
+            <p class="guided-q-desc">Look at your crop leaves carefully. What do you see?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_n" value="low">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🍂</span>
+                <span class="guided-opt-title">Pale yellow leaves</span>
+                <span class="guided-opt-desc">Leaves are turning yellow, plants growing slowly</span>
+                <span class="guided-opt-tag low">Low Nitrogen</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_n" value="medium">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌿</span>
+                <span class="guided-opt-title">Normal green leaves</span>
+                <span class="guided-opt-desc">Healthy green color, steady growth rate</span>
+                <span class="guided-opt-tag medium">Medium Nitrogen</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_n" value="high">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌳</span>
+                <span class="guided-opt-title">Very dark green & tall</span>
+                <span class="guided-opt-desc">Excessive dark green growth, tall plants</span>
+                <span class="guided-opt-tag high">High Nitrogen</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2: Phosphorus -->
+        <div class="guided-step" data-step="2">
+          <div class="guided-question-header">
+            <span class="guided-step-num">02</span>
+            <h3>🌸 Phosphorus (P) — Root & Flower Health</h3>
+            <p class="guided-q-desc">Check your plant roots and flowers. What's the condition?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_p" value="low">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">😟</span>
+                <span class="guided-opt-title">Poor roots / purple leaves</span>
+                <span class="guided-opt-desc">Weak root system, leaves have purple/red tint</span>
+                <span class="guided-opt-tag low">Low Phosphorus</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_p" value="medium">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌱</span>
+                <span class="guided-opt-title">Normal growth</span>
+                <span class="guided-opt-desc">Average root strength, decent flowering</span>
+                <span class="guided-opt-tag medium">Medium Phosphorus</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_p" value="high">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">💪</span>
+                <span class="guided-opt-title">Strong roots & flowering</span>
+                <span class="guided-opt-desc">Vigorous root network, abundant blooms</span>
+                <span class="guided-opt-tag high">High Phosphorus</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 3: Potassium -->
+        <div class="guided-step" data-step="3">
+          <div class="guided-question-header">
+            <span class="guided-step-num">03</span>
+            <h3>🍂 Potassium (K) — Plant Strength</h3>
+            <p class="guided-q-desc">How strong are your plant stems and leaf edges?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_k" value="low">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🥀</span>
+                <span class="guided-opt-title">Brown / burnt leaf edges</span>
+                <span class="guided-opt-desc">Leaf tips browning, weak disease resistance</span>
+                <span class="guided-opt-tag low">Low Potassium</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_k" value="medium">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌾</span>
+                <span class="guided-opt-title">Average health</span>
+                <span class="guided-opt-desc">Plants look okay, moderate stem strength</span>
+                <span class="guided-opt-tag medium">Medium Potassium</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_k" value="high">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">💚</span>
+                <span class="guided-opt-title">Strong stems & disease-resistant</span>
+                <span class="guided-opt-desc">Sturdy plants, good resistance to pests</span>
+                <span class="guided-opt-tag high">High Potassium</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4: pH -->
+        <div class="guided-step" data-step="4">
+          <div class="guided-question-header">
+            <span class="guided-step-num">04</span>
+            <h3>⚗️ Soil pH — Soil Nature</h3>
+            <p class="guided-q-desc">What kind of soil does your field have?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_ph" value="acidic">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🍋</span>
+                <span class="guided-opt-title">Acidic soil</span>
+                <span class="guided-opt-desc">Red/laterite soil, tea/coffee area, forest land</span>
+                <span class="guided-opt-tag low">pH 5.0 – 6.0</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_ph" value="neutral">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌾</span>
+                <span class="guided-opt-title">Normal / neutral soil</span>
+                <span class="guided-opt-desc">Most crops grow well, loamy black/brown soil</span>
+                <span class="guided-opt-tag medium">pH 6.5 – 7.0</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_ph" value="alkaline">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🧂</span>
+                <span class="guided-opt-title">Salty / alkaline soil</span>
+                <span class="guided-opt-desc">White crusts on surface, dry arid region</span>
+                <span class="guided-opt-tag high">pH 7.5 – 8.0</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 5: Temperature -->
+        <div class="guided-step" data-step="5">
+          <div class="guided-question-header">
+            <span class="guided-step-num">05</span>
+            <h3>🌡️ Temperature — Current Weather</h3>
+            <p class="guided-q-desc">How's the weather in your area these days?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_t" value="cold">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">❄️</span>
+                <span class="guided-opt-title">Cold weather</span>
+                <span class="guided-opt-desc">Need sweater/jacket, chilly mornings</span>
+                <span class="guided-opt-tag low">15 – 21°C</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_t" value="moderate">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌥️</span>
+                <span class="guided-opt-title">Moderate / pleasant</span>
+                <span class="guided-opt-desc">Comfortable, neither hot nor cold</span>
+                <span class="guided-opt-tag medium">22 – 29°C</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_t" value="hot">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">☀️</span>
+                <span class="guided-opt-title">Hot weather</span>
+                <span class="guided-opt-desc">Sweating, very sunny, need shade</span>
+                <span class="guided-opt-tag high">30 – 38°C</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 6: Humidity -->
+        <div class="guided-step" data-step="6">
+          <div class="guided-question-header">
+            <span class="guided-step-num">06</span>
+            <h3>💧 Humidity — Air Moisture</h3>
+            <p class="guided-q-desc">How does the air feel in your area?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_h" value="dry">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🏜️</span>
+                <span class="guided-opt-title">Very dry air</span>
+                <span class="guided-opt-desc">Skin feels dry, clothes dry quickly</span>
+                <span class="guided-opt-tag low">30 – 40%</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_h" value="moderate">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌫️</span>
+                <span class="guided-opt-title">Slightly moist</span>
+                <span class="guided-opt-desc">Comfortable air, morning dew on grass</span>
+                <span class="guided-opt-tag medium">50 – 60%</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_h" value="humid">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌧️</span>
+                <span class="guided-opt-title">Very humid / sticky</span>
+                <span class="guided-opt-desc">Sweaty air, foggy mornings, coastal feel</span>
+                <span class="guided-opt-tag high">70 – 90%</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 7: Rainfall -->
+        <div class="guided-step" data-step="7">
+          <div class="guided-question-header">
+            <span class="guided-step-num">07</span>
+            <h3>🌦️ Rainfall — Rain Pattern</h3>
+            <p class="guided-q-desc">How has the rain been this season?</p>
+          </div>
+          <div class="guided-options">
+            <label class="guided-option">
+              <input type="radio" name="guided_r" value="low">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌵</span>
+                <span class="guided-opt-title">Very little rain</span>
+                <span class="guided-opt-desc">Dry spells, need irrigation, drought-like</span>
+                <span class="guided-opt-tag low">20 – 50 mm</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_r" value="moderate">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">🌤️</span>
+                <span class="guided-opt-title">Moderate rain</span>
+                <span class="guided-opt-desc">Rains a few times a month, manageable</span>
+                <span class="guided-opt-tag medium">60 – 100 mm</span>
+              </div>
+            </label>
+            <label class="guided-option">
+              <input type="radio" name="guided_r" value="heavy">
+              <div class="guided-option-card">
+                <span class="guided-opt-emoji">⛈️</span>
+                <span class="guided-opt-title">Heavy / frequent rain</span>
+                <span class="guided-opt-desc">Water-logging, frequent heavy showers</span>
+                <span class="guided-opt-tag high">120 – 200 mm</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Guided Navigation -->
+        <div class="guided-nav">
+          <button class="guided-nav-btn guided-prev" onclick="guidedPrev()" id="guidedPrevBtn" style="visibility:hidden">← Previous</button>
+          <button class="guided-nav-btn guided-next" onclick="guidedNext()" id="guidedNextBtn">Next →</button>
+        </div>
+
+        <!-- Estimated Values Preview -->
+        <div class="guided-preview" id="guidedPreview" style="display:none">
+          <div class="guided-preview-title">🧠 AI-Estimated Values</div>
+          <div class="guided-preview-subtitle">Based on your field observations, here are the estimated values:</div>
+          <div class="guided-preview-grid" id="guidedPreviewGrid"></div>
+          <p class="guided-preview-note">💡 These are AI estimations. For precise values, get a lab soil test done at your local agriculture center.</p>
+          <div class="guided-preview-actions">
+            <button class="btn-primary" onclick="guidedPredict()" style="padding:14px 30px">🌱 Predict Best Crops</button>
+            <button class="btn-ghost" onclick="switchMode('lab')" style="font-size:0.88rem">Switch to Lab Mode →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ LAB MODE (Original Form) ═══ -->
+      <div id="labMode">
       <!-- Location & Weather Auto-fill -->
       <div class="form-section-title">📍 Location & Weather</div>
       <div class="location-weather-bar">
@@ -210,6 +522,7 @@
         <span class="btn-text">🌱 Predict Best Crops</span>
         <span class="btn-loader"><div class="spinner"></div> Analysing with AI…</span>
       </button>
+      </div><!-- /labMode -->
     </div>
   </div>
 </section>
