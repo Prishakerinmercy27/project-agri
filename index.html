@@ -15,16 +15,20 @@
 <nav>
   <div class="nav-logo" onclick="navTo('hero')">Crop<span>AI</span></div>
   <ul class="nav-links">
-    <li><a onclick="navTo('hero')">Home</a></li>
-    <li><a onclick="navTo('predict')">Predict</a></li>
-    <li><a onclick="navTo('compare')">Compare</a></li>
-    <li><a onclick="navTo('dashboard')" id="dashboardLink">Dashboard</a></li>
-    <li><a onclick="navTo('history')">History</a></li>
-    <li><a onclick="navTo('how')">How it works</a></li>
+    <li><a onclick="navTo('hero')" data-i18n="nav_home">Home</a></li>
+    <li><a onclick="navTo('predict')" data-i18n="nav_predict">Predict</a></li>
+    <li><a onclick="navTo('compare')" data-i18n="nav_compare">Compare</a></li>
+    <li><a onclick="navTo('dashboard')" id="dashboardLink" data-i18n="nav_dashboard">Dashboard</a></li>
+    <li><a onclick="navTo('history')" data-i18n="nav_history">History</a></li>
+    <li><a onclick="navTo('how')" data-i18n="nav_how">How it works</a></li>
   </ul>
   <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')" title="English">EN</button>
+      <button class="lang-btn" data-lang="ta" onclick="switchLanguage('ta')" title="தமிழ்">த</button>
+    </div>
     <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode"></button>
-    <button onclick="navTo('predict')" class="nav-cta">Try Prediction →</button>
+    <button onclick="navTo('predict')" class="nav-cta" data-i18n="nav_cta">Try Prediction →</button>
   </div>
 </nav>
 
@@ -32,18 +36,18 @@
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-tag">AI-Powered Agriculture</div>
-    <h1>
+    <div class="hero-tag" data-i18n="hero_tag">AI-Powered Agriculture</div>
+    <h1 data-i18n-html="hero_title">
       Grow <em>smarter</em><br>
       with <span class="underline-accent">data-driven</span><br>
       crop advice.
     </h1>
-    <p class="hero-desc">
+    <p class="hero-desc" data-i18n="hero_desc">
       Enter your soil nutrients and environmental conditions. Our machine learning models recommend the best crops tailored to your farm — with yield predictions, fertilizer advice, and risk analysis.
     </p>
     <div class="hero-btns">
-      <button onclick="navTo('predict')" class="btn-primary">🌱 Analyse my Farm</button>
-      <button onclick="navTo('how')" class="btn-ghost">See how it works →</button>
+      <button onclick="navTo('predict')" class="btn-primary" data-i18n="hero_btn_analyse">🌱 Analyse my Farm</button>
+      <button onclick="navTo('how')" class="btn-ghost" data-i18n="hero_btn_how">See how it works →</button>
     </div>
     <div class="hero-stats">
       <div class="stat-item">
@@ -77,9 +81,9 @@
 <section id="predict">
   <div class="predict-grid">
     <div class="predict-info">
-      <div class="section-label">ML Prediction Engine</div>
-      <h2 class="section-title">Enter your farm data</h2>
-      <p>Provide 7 key indicators about your soil and local climate. Choose from 3 ML models — Random Forest, Decision Tree, or XGBoost — for crop recommendations with yield predictions and fertilizer advice.</p>
+      <div class="section-label" data-i18n="predict_label">ML Prediction Engine</div>
+      <h2 class="section-title" data-i18n="predict_title">Enter your farm data</h2>
+      <p data-i18n="predict_desc">Provide 7 key indicators about your soil and local climate. Choose from 3 ML models — Random Forest, Decision Tree, or XGBoost — for crop recommendations with yield predictions and fertilizer advice.</p>
 
       <div class="param-list">
         <div class="param-item">
@@ -431,13 +435,15 @@
       </div>
 
       <!-- Soil Nutrients -->
-      <div class="form-section-title">🧪 Soil Nutrients</div>
+      <div class="form-section-title">
+        🧪 <span data-i18n="form_soil">Soil Nutrients</span>
+      </div>
       <div class="input-grid">
         <div class="input-group">
           <label>
-            Nitrogen (N)
+            <span data-i18n="label_nitrogen">Nitrogen (N)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Nitrogen promotes leaf and stem growth. High N = lush green plants. Get your soil tested at a local agricultural center.</span>
+              <span class="tooltip-text" data-i18n="tip_nitrogen">Nitrogen promotes leaf and stem growth. High N = lush green plants. Get your soil tested at a local agricultural center.</span>
             </span>
           </label>
           <input type="number" id="nitrogen" placeholder="e.g. 90" min="0" max="140">
@@ -445,9 +451,9 @@
         </div>
         <div class="input-group">
           <label>
-            Phosphorus (P)
+            <span data-i18n="label_phosphorus">Phosphorus (P)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Phosphorus helps root development and flowering. Essential for fruit and grain crops. Common in DAP fertilizer.</span>
+              <span class="tooltip-text" data-i18n="tip_phosphorus">Phosphorus helps root development and flowering. Essential for fruit and grain crops. Common in DAP fertilizer.</span>
             </span>
           </label>
           <input type="number" id="phosphorus" placeholder="e.g. 42" min="0" max="145">
@@ -455,9 +461,9 @@
         </div>
         <div class="input-group">
           <label>
-            Potassium (K)
+            <span data-i18n="label_potassium">Potassium (K)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Potassium strengthens plants and improves disease resistance. Important for overall plant health and fruit quality.</span>
+              <span class="tooltip-text" data-i18n="tip_potassium">Potassium strengthens plants and improves disease resistance. Important for overall plant health and fruit quality.</span>
             </span>
           </label>
           <input type="number" id="potassium" placeholder="e.g. 43" min="0" max="205">
@@ -465,9 +471,9 @@
         </div>
         <div class="input-group">
           <label>
-            Soil pH
+            <span data-i18n="label_ph">Soil pH</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">pH measures soil acidity/alkalinity. 7 is neutral. Most crops prefer 6–7. Test with a pH meter or litmus paper.</span>
+              <span class="tooltip-text" data-i18n="tip_ph">pH measures soil acidity/alkalinity. 7 is neutral. Most crops prefer 6–7. Test with a pH meter or litmus paper.</span>
             </span>
           </label>
           <input type="number" id="ph" placeholder="e.g. 6.5" step="0.1" min="0" max="14">
@@ -476,13 +482,13 @@
       </div>
 
       <!-- Environmental Conditions -->
-      <div class="form-section-title">🌡️ Environmental Conditions</div>
+      <div class="form-section-title">🌡️ <span data-i18n="form_env">Environmental Conditions</span></div>
       <div class="input-grid">
         <div class="input-group">
           <label>
-            Temperature (°C)
+            <span data-i18n="label_temp">Temperature (°C)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Average daytime temperature in your area. Use weather apps or click "Auto-fill Weather" above for real-time data.</span>
+              <span class="tooltip-text" data-i18n="tip_temp">Average daytime temperature in your area. Use weather apps or click "Auto-fill Weather" above for real-time data.</span>
             </span>
           </label>
           <input type="number" id="temperature" placeholder="e.g. 28" min="-10" max="55">
@@ -490,9 +496,9 @@
         </div>
         <div class="input-group">
           <label>
-            Humidity (%)
+            <span data-i18n="label_humidity">Humidity (%)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Relative humidity in your area. High humidity (70%+) favors rice/banana. Low humidity (30-50%) suits wheat/mustard.</span>
+              <span class="tooltip-text" data-i18n="tip_humidity">Relative humidity in your area. High humidity (70%+) favors rice/banana. Low humidity (30-50%) suits wheat/mustard.</span>
             </span>
           </label>
           <input type="number" id="humidity" placeholder="e.g. 80" min="0" max="100">
@@ -500,9 +506,9 @@
         </div>
         <div class="input-group" style="grid-column: 1 / -1;">
           <label>
-            Rainfall (mm)
+            <span data-i18n="label_rainfall">Rainfall (mm)</span>
             <span class="tooltip-icon">?
-              <span class="tooltip-text">Average monthly rainfall in your area. Coastal areas get 150–300mm, dry regions get 25–60mm. Check local weather station data.</span>
+              <span class="tooltip-text" data-i18n="tip_rainfall">Average monthly rainfall in your area. Coastal areas get 150–300mm, dry regions get 25–60mm. Check local weather station data.</span>
             </span>
           </label>
           <input type="number" id="rainfall" placeholder="e.g. 200" min="0" max="300">
@@ -530,20 +536,26 @@
 <!-- ═══ RESULTS ═══ -->
 <section id="result-section">
   <div class="result-header">
-    <div class="section-label" style="text-align:center">Recommendation Ready</div>
-    <h2 class="section-title" style="text-align:center">Best crops for your farm</h2>
-    <p style="text-align:center">
+    <div class="section-label" style="text-align:center" data-i18n="result_label">Recommendation Ready</div>
+    <h2 class="section-title" style="text-align:center" data-i18n="result_title">Best crops for your farm</h2>
+    <p style="text-align:center" data-i18n="result_desc">
       Based on your inputs, here are the top crop recommendations with yield predictions, risk assessment, and fertilizer advice.
     </p>
   </div>
 
   <div class="input-summary" id="inputSummary"></div>
 
+  <!-- Soil Health Score -->
+  <div class="soil-health-section" id="soilHealthSection"></div>
+
   <!-- Feature Importance -->
   <div class="feature-importance" id="featureImportance"></div>
 
   <!-- Crop Cards -->
   <div class="result-grid" id="resultGrid"></div>
+
+  <!-- Crop Profit Prediction -->
+  <div class="profit-section" id="profitSection"></div>
 
   <!-- Export & Action Buttons -->
   <div class="export-bar">
@@ -608,8 +620,8 @@
 <!-- ═══ HOW IT WORKS ═══ -->
 <section id="how">
   <div style="text-align:center;max-width:600px;margin:0 auto">
-    <div class="section-label" style="text-align:center">Process</div>
-    <h2 class="section-title" style="text-align:center">How CropAI works</h2>
+    <div class="section-label" style="text-align:center" data-i18n="how_label">Process</div>
+    <h2 class="section-title" style="text-align:center" data-i18n="how_title">How CropAI works</h2>
   </div>
   <div class="how-grid reveal">
     <div class="how-card">
@@ -639,6 +651,93 @@
   <p>Smart Crop Recommendation System · Built with ML &amp; ♥</p>
   <p style="font-size:0.78rem">22 crops · 3 ML models · Weather API · Export reports</p>
 </footer>
+
+<!-- ═══ FLOATING VOICE ASSISTANT ═══ -->
+<button class="voice-fab" id="voiceFab" onclick="openVoiceAssistant()" title="Smart Farmer Voice Assistant">
+  <span class="voice-fab-icon">🎤</span>
+  <span class="voice-fab-pulse"></span>
+</button>
+
+<!-- Voice Assistant Modal -->
+<div class="voice-overlay" id="voiceOverlay" onclick="closeVoiceAssistant()"></div>
+<div class="voice-panel" id="voicePanel">
+  <div class="voice-panel-header">
+    <div class="voice-panel-title">
+      <span class="voice-panel-logo">🧑‍🌾</span>
+      <div>
+        <h3 data-i18n="voice_panel_title">Smart Farmer Voice Assistant</h3>
+        <p data-i18n="voice_panel_subtitle">Speak your soil values or ask a farming question</p>
+      </div>
+    </div>
+    <button class="voice-panel-close" onclick="closeVoiceAssistant()">✕</button>
+  </div>
+
+  <div class="voice-panel-body">
+    <!-- Status Area -->
+    <div class="voice-status-area" id="voiceStatusArea">
+      <div class="voice-idle-state" id="voiceIdleState">
+        <div class="voice-big-mic">🎤</div>
+        <p data-i18n="voice_tap_to_speak">Tap the microphone to start speaking</p>
+        <div class="voice-examples">
+          <div class="voice-example-title" data-i18n="voice_try_saying">Try saying:</div>
+          <div class="voice-example-chip">"Nitrogen 90, Phosphorus 42, pH 6.5"</div>
+          <div class="voice-example-chip">"Suggest crop for black soil"</div>
+          <div class="voice-example-chip">"Best crop for rainy season"</div>
+        </div>
+      </div>
+
+      <div class="voice-listening-state" id="voiceListeningState" style="display:none">
+        <div class="voice-wave-container">
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+          <div class="voice-wave-bar"></div>
+        </div>
+        <p class="voice-listening-text" data-i18n="voice_listening_now">🟢 Listening...</p>
+        <p class="voice-listening-hint" data-i18n="voice_speak_now">Speak clearly into your microphone</p>
+      </div>
+
+      <div class="voice-processing-state" id="voiceProcessingState" style="display:none">
+        <div class="voice-spinner"></div>
+        <p data-i18n="voice_processing">Processing your voice...</p>
+      </div>
+    </div>
+
+    <!-- Transcript -->
+    <div class="voice-transcript-area" id="voiceTranscriptArea" style="display:none">
+      <div class="voice-transcript-label">📝 <span data-i18n="voice_transcript">Transcript</span></div>
+      <div class="voice-transcript-text" id="voiceTranscriptText"></div>
+    </div>
+
+    <!-- Detected Values Confirmation -->
+    <div class="voice-values-area" id="voiceValuesArea" style="display:none">
+      <div class="voice-values-title">✅ <span data-i18n="voice_values_detected">Values Detected from Voice</span></div>
+      <div class="voice-values-grid" id="voiceValuesGrid"></div>
+    </div>
+
+    <!-- AI Answer Area (for farmer questions) -->
+    <div class="voice-answer-area" id="voiceAnswerArea" style="display:none">
+      <div class="voice-question-bubble" id="voiceQuestionBubble"></div>
+      <div class="voice-answer-bubble" id="voiceAnswerBubble"></div>
+    </div>
+  </div>
+
+  <div class="voice-panel-footer">
+    <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleVoiceListening()">
+      <span class="voice-mic-btn-icon" id="voiceMicBtnIcon">🎤</span>
+    </button>
+    <div class="voice-action-btns" id="voiceActionBtns" style="display:none">
+      <button class="voice-action-btn voice-retry-btn" onclick="retryVoice()">🔄 <span data-i18n="voice_retry">Retry</span></button>
+      <button class="voice-action-btn voice-apply-btn" onclick="applyVoiceValues()">✅ <span data-i18n="voice_apply">Apply to Form</span></button>
+    </div>
+    <div class="voice-lang-indicator">
+      <span id="voiceLangLabel">🌐 English (IN)</span>
+    </div>
+  </div>
+</div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer onerror="console.warn('Chart.js CDN failed to load. Dashboard charts will be unavailable.')"></script>

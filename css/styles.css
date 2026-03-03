@@ -928,6 +928,7 @@ footer p { font-size: 0.82rem; }
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 1024px) {
   .dashboard-grid { grid-template-columns: 1fr; }
+  .profit-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 }
 @media (max-width: 900px) {
   nav { padding: 14px 20px; }
@@ -942,6 +943,9 @@ footer p { font-size: 0.82rem; }
   #result-section { padding: 60px 24px; }
   .history-item { grid-template-columns: 1fr; }
   .compare-controls { flex-direction: column; }
+  .soil-health-score-wrap { flex-direction: column; align-items: center; text-align: center; }
+  .profit-grid { grid-template-columns: 1fr; }
+  .lang-switcher { order: -1; }
 }
 @media (max-width: 500px) {
   .input-grid { grid-template-columns: 1fr; }
@@ -953,6 +957,507 @@ footer p { font-size: 0.82rem; }
   .mode-toggle-wrap { grid-template-columns: 1fr; }
   .guided-option-card { grid-template-columns: auto 1fr; }
   .guided-opt-tag { grid-column: 2; grid-row: auto; justify-self: start; margin-top: 4px; }
+  .soil-health-card { padding: 20px 16px; }
+  .soil-score-circle { width: 80px; height: 80px; }
+  .soil-score-num { font-size: 1.4rem; }
+  .profit-metrics { grid-template-columns: 1fr; }
+  .profit-card { padding: 18px; }
+  .nav-right { gap: 8px; }
+  .lang-switcher { padding: 1px; }
+  .lang-btn { padding: 4px 8px; font-size: 0.7rem; }
+}
+
+/* ═══ LANGUAGE SWITCHER ═══ */
+.lang-switcher {
+  display: flex; gap: 2px;
+  background: var(--mist); border-radius: 8px;
+  padding: 2px; border: 1px solid var(--nav-border);
+}
+.lang-btn {
+  padding: 5px 10px; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600;
+  border: none; cursor: pointer;
+  background: transparent; color: var(--soil);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.lang-btn.active {
+  background: var(--moss); color: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.lang-btn:hover:not(.active) { background: rgba(93,143,58,0.1); }
+
+/* ═══ VOICE ASSISTANT — FLOATING BUTTON ═══ */
+.voice-fab {
+  position: fixed; bottom: 32px; right: 32px; z-index: 500;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, #5c8f3a, #3d5a2e);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 28px rgba(61,90,46,0.45), 0 0 0 0 rgba(92,143,58,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fab-pulse 3s ease-in-out infinite;
+}
+.voice-fab:hover {
+  transform: scale(1.1); 
+  box-shadow: 0 8px 36px rgba(61,90,46,0.55);
+}
+.voice-fab-icon { font-size: 1.6rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+.voice-fab-pulse {
+  position: absolute; inset: -4px; border-radius: 50%;
+  border: 2px solid rgba(139,195,74,0.5);
+  animation: fab-ring 3s ease-in-out infinite;
+}
+@keyframes fab-pulse {
+  0%, 100% { box-shadow: 0 6px 28px rgba(61,90,46,0.45), 0 0 0 0 rgba(92,143,58,0.3); }
+  50% { box-shadow: 0 6px 28px rgba(61,90,46,0.45), 0 0 0 12px rgba(92,143,58,0); }
+}
+@keyframes fab-ring {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0; }
+}
+
+/* ═══ VOICE ASSISTANT — OVERLAY ═══ */
+.voice-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+}
+.voice-overlay.open { opacity: 1; pointer-events: auto; }
+
+/* ═══ VOICE ASSISTANT — PANEL ═══ */
+.voice-panel {
+  position: fixed; bottom: 32px; right: 32px; z-index: 950;
+  width: 420px; max-height: calc(100vh - 80px);
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(93,143,58,0.15);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.95); opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+}
+.voice-panel.open {
+  transform: translateY(0) scale(1); opacity: 1;
+  pointer-events: auto;
+}
+
+/* Panel Header */
+.voice-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px; gap: 12px;
+  background: linear-gradient(135deg, #3d5a2e, #2a3f1f);
+  color: white;
+}
+.voice-panel-title { display: flex; align-items: center; gap: 12px; }
+.voice-panel-logo { font-size: 1.6rem; }
+.voice-panel-title h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 600; margin: 0;
+  color: white;
+}
+.voice-panel-title p {
+  font-size: 0.7rem; opacity: 0.65; margin: 2px 0 0; color: white;
+}
+.voice-panel-close {
+  background: rgba(255,255,255,0.15); border: none;
+  color: white; width: 32px; height: 32px; border-radius: 50%;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.voice-panel-close:hover { background: rgba(255,255,255,0.25); }
+
+/* Panel Body */
+.voice-panel-body {
+  flex: 1; padding: 20px;
+  overflow-y: auto; max-height: 420px;
+}
+
+/* Idle State */
+.voice-idle-state { text-align: center; padding: 16px 0; }
+.voice-big-mic {
+  font-size: 3rem; margin-bottom: 12px;
+  filter: grayscale(0.2);
+}
+.voice-idle-state > p {
+  font-size: 0.88rem; color: #6a6a55; margin-bottom: 20px;
+}
+body.dark-mode .voice-idle-state > p { color: #9a9a80; }
+.voice-examples { display: flex; flex-direction: column; gap: 6px; }
+.voice-example-title {
+  font-size: 0.72rem; font-weight: 600; color: var(--moss);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+}
+.voice-example-chip {
+  background: rgba(93,143,58,0.08); border: 1px solid rgba(93,143,58,0.15);
+  border-radius: 10px; padding: 8px 14px;
+  font-size: 0.78rem; color: var(--moss); font-style: italic;
+  transition: background 0.2s; cursor: default;
+}
+.voice-example-chip:hover { background: rgba(93,143,58,0.14); }
+
+/* Listening State — Sound Waves */
+.voice-listening-state { text-align: center; padding: 24px 0; }
+.voice-wave-container {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; height: 50px; margin-bottom: 16px;
+}
+.voice-wave-bar {
+  width: 6px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--sprout), var(--leaf));
+  animation: voice-wave 1.2s ease-in-out infinite;
+}
+.voice-wave-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+.voice-wave-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+.voice-wave-bar:nth-child(3) { height: 32px; animation-delay: 0.2s; }
+.voice-wave-bar:nth-child(4) { height: 44px; animation-delay: 0.3s; }
+.voice-wave-bar:nth-child(5) { height: 32px; animation-delay: 0.4s; }
+.voice-wave-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
+.voice-wave-bar:nth-child(7) { height: 12px; animation-delay: 0.6s; }
+@keyframes voice-wave {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.voice-listening-text {
+  font-size: 1rem; font-weight: 600; color: var(--success);
+  margin-bottom: 4px;
+}
+.voice-listening-hint {
+  font-size: 0.75rem; color: #8a8a6a;
+}
+body.dark-mode .voice-listening-hint { color: #8a8a70; }
+
+/* Processing State */
+.voice-processing-state { text-align: center; padding: 30px 0; }
+.voice-spinner {
+  width: 36px; height: 36px; margin: 0 auto 14px;
+  border: 3px solid var(--mist); border-top-color: var(--leaf);
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+.voice-processing-state p { font-size: 0.88rem; color: #6a6a55; }
+body.dark-mode .voice-processing-state p { color: #9a9a80; }
+
+/* Transcript Area */
+.voice-transcript-area {
+  margin-top: 16px; padding: 14px 16px;
+  background: rgba(93,143,58,0.06);
+  border: 1px solid rgba(93,143,58,0.12);
+  border-radius: 14px;
+}
+.voice-transcript-label {
+  font-size: 0.72rem; font-weight: 600; color: var(--moss);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+}
+.voice-transcript-text {
+  font-size: 0.92rem; color: var(--earth); line-height: 1.6;
+  font-style: italic; padding: 8px 12px;
+  background: rgba(255,255,255,0.5); border-radius: 10px;
+  border-left: 3px solid var(--leaf);
+}
+body.dark-mode .voice-transcript-text { background: rgba(255,255,255,0.05); }
+
+/* Detected Values Grid */
+.voice-values-area {
+  margin-top: 16px; padding: 16px;
+  background: rgba(39,174,96,0.06);
+  border: 1px solid rgba(39,174,96,0.15);
+  border-radius: 14px;
+  animation: fadeUp 0.4s ease;
+}
+.voice-values-title {
+  font-size: 0.82rem; font-weight: 600; color: var(--success);
+  margin-bottom: 12px;
+}
+.voice-values-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.voice-value-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border-radius: 10px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(39,174,96,0.1);
+}
+body.dark-mode .voice-value-item { background: rgba(255,255,255,0.05); }
+.voice-value-name {
+  font-size: 0.75rem; color: #6a6a55; font-weight: 500;
+}
+body.dark-mode .voice-value-name { color: #9a9a80; }
+.voice-value-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--success);
+}
+
+/* AI Answer Bubbles (Farmer Q&A) */
+.voice-answer-area {
+  margin-top: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  animation: fadeUp 0.4s ease;
+}
+.voice-question-bubble {
+  align-self: flex-end; max-width: 85%;
+  padding: 12px 16px; border-radius: 16px 16px 4px 16px;
+  background: linear-gradient(135deg, var(--leaf), var(--moss));
+  color: white; font-size: 0.85rem; line-height: 1.5;
+}
+.voice-question-bubble::before {
+  content: '👨‍🌾 You said:'; display: block;
+  font-size: 0.65rem; font-weight: 600; opacity: 0.7;
+  margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.voice-answer-bubble {
+  align-self: flex-start; max-width: 85%;
+  padding: 14px 16px; border-radius: 16px 16px 16px 4px;
+  background: var(--mist); color: var(--earth);
+  font-size: 0.85rem; line-height: 1.6;
+  border: 1px solid rgba(93,143,58,0.12);
+}
+.voice-answer-bubble::before {
+  content: '🤖 AI Farmer Assistant:'; display: block;
+  font-size: 0.65rem; font-weight: 600; color: var(--moss);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* Panel Footer */
+.voice-panel-footer {
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--mist);
+  background: var(--card-bg);
+}
+.voice-mic-btn {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--leaf), var(--moss));
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(93,143,58,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.voice-mic-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(93,143,58,0.5);
+}
+.voice-mic-btn.listening {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  box-shadow: 0 4px 20px rgba(231,76,60,0.4);
+  animation: pulse-mic 1.5s infinite;
+}
+.voice-mic-btn-icon { font-size: 1.6rem; }
+@keyframes pulse-mic {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.4), 0 4px 20px rgba(231,76,60,0.4); }
+  50% { box-shadow: 0 0 0 14px rgba(231,76,60,0), 0 4px 20px rgba(231,76,60,0.4); }
+}
+.voice-action-btns {
+  display: flex; gap: 10px; width: 100%;
+}
+.voice-action-btn {
+  flex: 1; padding: 11px 16px; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+  font-weight: 600; cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.voice-retry-btn {
+  background: var(--mist); color: var(--earth);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.voice-retry-btn:hover { background: rgba(0,0,0,0.06); }
+body.dark-mode .voice-retry-btn:hover { background: rgba(255,255,255,0.08); }
+.voice-apply-btn {
+  background: linear-gradient(135deg, var(--leaf), var(--moss));
+  color: white; box-shadow: 0 3px 14px rgba(93,143,58,0.3);
+}
+.voice-apply-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(93,143,58,0.4);
+}
+.voice-lang-indicator {
+  font-size: 0.7rem; color: #8a8a6a;
+}
+body.dark-mode .voice-lang-indicator { color: #7a7a60; }
+
+/* Voice Panel Mobile Responsive */
+@media (max-width: 500px) {
+  .voice-panel {
+    width: calc(100vw - 24px); right: 12px; bottom: 12px;
+    max-height: calc(100vh - 40px);
+    border-radius: 20px;
+  }
+  .voice-fab { bottom: 20px; right: 20px; width: 56px; height: 56px; }
+  .voice-fab-icon { font-size: 1.4rem; }
+  .voice-values-grid { grid-template-columns: 1fr; }
+  .voice-panel-body { max-height: 340px; }
+}
+
+/* ═══ SOIL HEALTH SCORE ═══ */
+.soil-health-section {
+  max-width: 800px; margin: 0 auto 48px;
+}
+.soil-health-card {
+  background: var(--card-bg); border-radius: 20px;
+  padding: 32px; box-shadow: 0 4px 24px var(--card-shadow);
+  border: 2px solid transparent;
+  transition: background 0.4s;
+}
+.soil-health-card.health-good { border-color: var(--success); }
+.soil-health-card.health-moderate { border-color: var(--warning); }
+.soil-health-card.health-poor { border-color: var(--danger); }
+
+.soil-health-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.soil-health-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--earth);
+  display: flex; align-items: center; gap: 10px;
+}
+.soil-health-badge {
+  padding: 5px 16px; border-radius: 50px;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.soil-health-badge.good { background: rgba(39,174,96,0.12); color: var(--success); }
+.soil-health-badge.moderate { background: rgba(243,156,18,0.12); color: var(--warning); }
+.soil-health-badge.poor { background: rgba(231,76,60,0.12); color: var(--danger); }
+
+.soil-health-score-wrap {
+  display: flex; align-items: center; gap: 24px;
+  margin-bottom: 24px; flex-wrap: wrap;
+}
+.soil-score-circle {
+  width: 100px; height: 100px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; flex-shrink: 0;
+  position: relative;
+}
+.soil-score-circle::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--score-color) var(--score-pct), var(--mist) var(--score-pct));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #fff calc(100% - 7px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #fff calc(100% - 7px));
+}
+.soil-score-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 900; z-index: 1;
+}
+.soil-score-num.good { color: var(--success); }
+.soil-score-num.moderate { color: var(--warning); }
+.soil-score-num.poor { color: var(--danger); }
+.soil-score-label { font-size: 0.65rem; color: #8a8a6a; z-index: 1; }
+
+.soil-health-bars {
+  flex: 1; min-width: 200px;
+}
+.soil-bar-item { margin-bottom: 10px; }
+.soil-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem; color: #6a6a55; margin-bottom: 4px;
+}
+body.dark-mode .soil-bar-label { color: #9a9a80; }
+.soil-bar {
+  height: 8px; background: var(--mist); border-radius: 4px; overflow: hidden;
+}
+.soil-bar-fill {
+  height: 100%; border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.25,1,0.5,1);
+  width: 0%;
+}
+.soil-bar-fill.good { background: linear-gradient(90deg, #27ae60, #2ecc71); }
+.soil-bar-fill.moderate { background: linear-gradient(90deg, #e67e22, #f39c12); }
+.soil-bar-fill.poor { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+
+.soil-health-tips {
+  margin-top: 16px; padding: 14px 18px;
+  background: rgba(93,143,58,0.06);
+  border: 1px solid rgba(93,143,58,0.12);
+  border-radius: 12px;
+}
+.soil-health-tips h4 {
+  font-size: 0.82rem; font-weight: 600; color: var(--moss);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.soil-health-tips ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.soil-health-tips li {
+  font-size: 0.78rem; color: #5a5a45; padding: 3px 0;
+  display: flex; align-items: center; gap: 6px;
+}
+body.dark-mode .soil-health-tips li { color: #9a9a80; }
+
+/* ═══ CROP PROFIT PREDICTION ═══ */
+.profit-section {
+  max-width: 1100px; margin: 48px auto 0;
+}
+.profit-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--earth);
+  text-align: center; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.profit-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.profit-card {
+  background: var(--card-bg); border-radius: 20px;
+  padding: 24px; box-shadow: 0 4px 24px var(--card-shadow);
+  border: 1px solid rgba(93,143,58,0.12);
+  transition: transform 0.25s, background 0.4s;
+  animation: fadeUp 0.5s ease both;
+}
+.profit-card:hover { transform: translateY(-4px); }
+
+.profit-card-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--mist);
+}
+.profit-card-emoji { font-size: 2rem; }
+.profit-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--earth);
+}
+.profit-card-type {
+  font-size: 0.7rem; color: var(--leaf);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.profit-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 16px;
+}
+.profit-metric {
+  background: rgba(93,143,58,0.05); border-radius: 12px;
+  padding: 12px; text-align: center;
+  border: 1px solid rgba(93,143,58,0.08);
+}
+.profit-metric-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--moss);
+}
+.profit-metric-key {
+  font-size: 0.68rem; color: #8a8a6a; margin-top: 2px;
+}
+body.dark-mode .profit-metric-key { color: #8a8a70; }
+
+.profit-total {
+  background: linear-gradient(135deg, rgba(39,174,96,0.1), rgba(39,174,96,0.05));
+  border: 1px solid rgba(39,174,96,0.2);
+  border-radius: 14px; padding: 16px; text-align: center;
+}
+.profit-total-label {
+  font-size: 0.75rem; color: #27ae60; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+}
+.profit-total-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 900; color: #27ae60;
 }
 
 /* ═══ SCROLL REVEAL ═══ */
@@ -963,7 +1468,8 @@ footer p { font-size: 0.82rem; }
 @media print {
   nav, footer, .hero-visual, .predict-info, .export-bar,
   .btn-primary, .nav-cta, #predict, #how, #compare, #history,
-  #dashboard, .theme-toggle, .guided-mode, .mode-toggle-wrap { display: none !important; }
+  #dashboard, .theme-toggle, .guided-mode, .mode-toggle-wrap,
+  .voice-fab, .voice-panel, .voice-overlay { display: none !important; }
   #result-section { display: block !important; padding: 20px; }
   .crop-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
   body { background: white; color: black; }

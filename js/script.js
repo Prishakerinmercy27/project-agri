@@ -8,8 +8,732 @@ const CONFIG = {
   WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5/weather',
   HISTORY_KEY: 'cropai_history',
   DARK_MODE_KEY: 'cropai_darkmode',
+  LANG_KEY: 'cropai_lang',
   MAX_HISTORY: 20,
 };
+
+// ═══ Multi-Language Support (English / Tamil) ═══
+const i18n = {
+  en: {
+    nav_home: 'Home', nav_predict: 'Predict', nav_compare: 'Compare',
+    nav_dashboard: 'Dashboard', nav_history: 'History', nav_how: 'How it works',
+    nav_cta: 'Try Prediction →',
+    hero_tag: 'AI-Powered Agriculture',
+    hero_title: 'Grow <em>smarter</em><br>with <span class="underline-accent">data-driven</span><br>crop advice.',
+    hero_desc: 'Enter your soil nutrients and environmental conditions. Our machine learning models recommend the best crops tailored to your farm — with yield predictions, fertilizer advice, and risk analysis.',
+    hero_btn_analyse: '🌱 Analyse my Farm',
+    hero_btn_how: 'See how it works →',
+    predict_label: 'ML Prediction Engine',
+    predict_title: 'Enter your farm data',
+    predict_desc: 'Provide 7 key indicators about your soil and local climate. Choose from 3 ML models — Random Forest, Decision Tree, or XGBoost — for crop recommendations with yield predictions and fertilizer advice.',
+    form_soil: 'Soil Nutrients', form_env: 'Environmental Conditions',
+    label_nitrogen: 'Nitrogen (N)', label_phosphorus: 'Phosphorus (P)',
+    label_potassium: 'Potassium (K)', label_ph: 'Soil pH',
+    label_temp: 'Temperature (°C)', label_humidity: 'Humidity (%)',
+    label_rainfall: 'Rainfall (mm)',
+    tip_nitrogen: 'Nitrogen promotes leaf and stem growth. High N = lush green plants.',
+    tip_phosphorus: 'Phosphorus helps root development and flowering. Essential for fruit and grain crops.',
+    tip_potassium: 'Potassium strengthens plants and improves disease resistance.',
+    tip_ph: 'pH measures soil acidity/alkalinity. 7 is neutral. Most crops prefer 6–7.',
+    tip_temp: 'Average daytime temperature in your area.',
+    tip_humidity: 'Relative humidity in your area. High humidity (70%+) favors rice/banana.',
+    tip_rainfall: 'Average monthly rainfall in your area.',
+    voice_btn: 'Voice Input',
+    voice_listening: '🎤 Listening... Speak your values',
+    voice_success: '✅ Values filled from voice input!',
+    voice_error: '❌ Could not recognize speech. Please try again.',
+    voice_not_supported: '❌ Voice input is not supported in this browser.',
+    voice_panel_title: 'Smart Farmer Voice Assistant',
+    voice_panel_subtitle: 'Speak your soil values or ask farming questions',
+    voice_tap_to_speak: 'Tap the microphone to start',
+    voice_try_saying: 'Try: "Nitrogen 90, Phosphorus 42, pH 6.5"',
+    voice_listening_now: 'Listening...',
+    voice_speak_now: 'Speak clearly now',
+    voice_processing: 'Processing your input...',
+    voice_transcript: 'You said:',
+    voice_values_detected: '✅ Values Detected',
+    voice_retry: '🔄 Retry',
+    voice_apply: '✅ Apply to Form',
+    result_label: 'Recommendation Ready',
+    result_title: 'Best crops for your farm',
+    result_desc: 'Based on your inputs, here are the top crop recommendations with yield predictions, risk assessment, and fertilizer advice.',
+    how_label: 'Process', how_title: 'How CropAI works',
+    soil_health_title: '🏥 Soil Health Score',
+    soil_health_good: 'Good', soil_health_moderate: 'Moderate', soil_health_poor: 'Poor',
+    soil_health_out_of: 'out of 100',
+    profit_title: '💰 Crop Profit Estimation',
+    yield_per_acre: 'Yield / Acre', market_price: 'Market Price',
+    est_profit: 'Estimated Profit / Acre', cost_per_acre: 'Cost / Acre',
+    suitability: 'Suitability Score', confidence: 'Suitability Score',
+    growing_period: '🌱 Growing Period', water_req: '💧 Water Requirement',
+    est_yield: '📦 Est. Yield', common_diseases: '⚠️ Common Diseases',
+    fert_title: '🧪 Fertilizer Recommendation',
+    tip_add_nitrogen: 'Add nitrogen-rich fertilizers like Urea',
+    tip_add_phosphorus: 'Consider DAP or bone meal for phosphorus',
+    tip_add_potassium: 'Apply MOP (Muriate of Potash) for potassium',
+    tip_adjust_ph: 'Consider lime (for acidity) or sulfur (for alkalinity) to adjust pH',
+    tip_soil_great: 'Your soil nutrients are well-balanced! Maintain with regular testing.',
+  },
+  ta: {
+    nav_home: 'முகப்பு', nav_predict: 'கணிப்பு', nav_compare: 'ஒப்பிடு',
+    nav_dashboard: 'டாஷ்போர்டு', nav_history: 'வரலாறு', nav_how: 'எப்படி வேலை செய்கிறது',
+    nav_cta: 'கணிப்பு முயற்சி →',
+    hero_tag: 'AI-செயற்கை நுண்ணறிவு வேளாண்மை',
+    hero_title: '<em>புத்திசாலித்தனமாக</em><br><span class="underline-accent">தரவு அடிப்படையில்</span><br>பயிர் ஆலோசனை.',
+    hero_desc: 'உங்கள் மண் ஊட்டச்சத்துகள் மற்றும் சுற்றுச்சூழல் நிலைகளை உள்ளிடுங்கள். எங்கள் ML மாதிரிகள் உங்கள் பண்ணைக்கு ஏற்ற சிறந்த பயிர்களை பரிந்துரைக்கின்றன.',
+    hero_btn_analyse: '🌱 என் பண்ணையை பகுப்பாய்வு செய்',
+    hero_btn_how: 'எப்படி வேலை செய்கிறது →',
+    predict_label: 'ML கணிப்பு இயந்திரம்',
+    predict_title: 'உங்கள் பண்ணை தரவை உள்ளிடுங்கள்',
+    predict_desc: 'உங்கள் மண் மற்றும் உள்ளூர் காலநிலை பற்றிய 7 முக்கிய குறிகாட்டிகளை வழங்குங்கள். 3 ML மாதிரிகளில் இருந்து தேர்ந்தெடுக்கவும்.',
+    form_soil: 'மண் ஊட்டச்சத்துகள்', form_env: 'சுற்றுச்சூழல் நிலைகள்',
+    label_nitrogen: 'நைட்ரஜன் (N)', label_phosphorus: 'பாஸ்பரஸ் (P)',
+    label_potassium: 'பொட்டாசியம் (K)', label_ph: 'மண் pH',
+    label_temp: 'வெப்பநிலை (°C)', label_humidity: 'ஈரப்பதம் (%)',
+    label_rainfall: 'மழையளவு (mm)',
+    tip_nitrogen: 'நைட்ரஜன் இலை மற்றும் தண்டு வளர்ச்சியை ஊக்குவிக்கிறது.',
+    tip_phosphorus: 'பாஸ்பரஸ் வேர் வளர்ச்சி மற்றும் பூக்கும் தன்மையை உதவுகிறது.',
+    tip_potassium: 'பொட்டாசியம் செடிகளை வலுப்படுத்துகிறது.',
+    tip_ph: 'pH மண் அமிலத்தன்மையை அளவிடுகிறது. 7 நடுநிலை.',
+    tip_temp: 'உங்கள் பகுதியின் சராசரி பகல் வெப்பநிலை.',
+    tip_humidity: 'உங்கள் பகுதியில் ஈரப்பதம்.',
+    tip_rainfall: 'உங்கள் பகுதியில் சராசரி மாத மழையளவு.',
+    voice_btn: 'குரல் உள்ளீடு',
+    voice_listening: '🎤 கேட்கிறேன்... உங்கள் மதிப்புகளைச் சொல்லுங்கள்',
+    voice_success: '✅ குரல் உள்ளீட்டிலிருந்து மதிப்புகள் நிரப்பப்பட்டன!',
+    voice_error: '❌ பேச்சை அறிய முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
+    voice_not_supported: '❌ இந்த உலாவியில் குரல் உள்ளீடு ஆதரிக்கப்படவில்லை.',
+    voice_panel_title: 'ஸ்மார்ட் விவசாயி குரல் உதவியாளர்',
+    voice_panel_subtitle: 'மண் மதிப்புகளை பேசுங்கள் அல்லது விவசாய கேள்விகள் கேளுங்கள்',
+    voice_tap_to_speak: 'தொடங்க மைக்ரோஃபோனை அழுத்தவும்',
+    voice_try_saying: 'முயற்சிக்கவும்: "நைட்ரஜன் 90, பாஸ்பரஸ் 42, pH 6.5"',
+    voice_listening_now: 'கேட்கிறேன்...',
+    voice_speak_now: 'இப்போது தெளிவாகப் பேசுங்கள்',
+    voice_processing: 'உங்கள் உள்ளீட்டை செயலாக்குகிறது...',
+    voice_transcript: 'நீங்கள் சொன்னது:',
+    voice_values_detected: '✅ மதிப்புகள் கண்டறியப்பட்டன',
+    voice_retry: '🔄 மீண்டும்',
+    voice_apply: '✅ படிவத்தில் பயன்படுத்து',
+    result_label: 'பரிந்துரை தயார்',
+    result_title: 'உங்கள் பண்ணைக்கு சிறந்த பயிர்கள்',
+    result_desc: 'உங்கள் உள்ளீடுகளின் அடிப்படையில், விளைச்சல் கணிப்புகள், ஆபத்து மதிப்பீடு மற்றும் உர ஆலோசனையுடன் சிறந்த பயிர் பரிந்துரைகள்.',
+    how_label: 'செயல்முறை', how_title: 'CropAI எப்படி வேலை செய்கிறது',
+    soil_health_title: '🏥 மண் ஆரோக்கிய மதிப்பெண்',
+    soil_health_good: 'நல்லது', soil_health_moderate: 'மிதமான', soil_health_poor: 'மோசம்',
+    soil_health_out_of: '100 இல்',
+    profit_title: '💰 பயிர் லாப மதிப்பீடு',
+    yield_per_acre: 'விளைச்சல் / ஏக்கர்', market_price: 'சந்தை விலை',
+    est_profit: 'மதிப்பிடப்பட்ட லாபம் / ஏக்கர்', cost_per_acre: 'செலவு / ஏக்கர்',
+    suitability: 'பொருத்த மதிப்பெண்', confidence: 'பொருத்த மதிப்பெண்',
+    growing_period: '🌱 வளரும் காலம்', water_req: '💧 நீர் தேவை',
+    est_yield: '📦 மதிப்பிடப்பட்ட விளைச்சல்', common_diseases: '⚠️ பொதுவான நோய்கள்',
+    fert_title: '🧪 உர பரிந்துரை',
+    tip_add_nitrogen: 'யூரியா போன்ற நைட்ரஜன் நிறைந்த உரங்களைச் சேர்க்கவும்',
+    tip_add_phosphorus: 'பாஸ்பரஸுக்கு DAP அல்லது எலும்பு மாவை சேர்க்கவும்',
+    tip_add_potassium: 'பொட்டாசியத்திற்கு MOP பயன்படுத்தவும்',
+    tip_adjust_ph: 'pH சரிசெய்ய சுண்ணாம்பு அல்லது கந்தகம் சேர்க்கவும்',
+    tip_soil_great: 'உங்கள் மண் ஊட்டச்சத்துகள் சீராக உள்ளன! தொடர்ந்து சோதனை செய்யுங்கள்.',
+  }
+};
+
+// Current language
+let currentLang = 'en';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem(CONFIG.LANG_KEY, lang);
+
+  // Update active button
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+
+  // Update all data-i18n-html elements (for HTML content)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+  });
+
+  // Re-render results if they exist
+  if (appState.lastResults && appState.lastInputs) {
+    renderResults(appState.lastInputs, appState.lastResults);
+  }
+
+  // Update voice assistant language label
+  if (typeof updateVoiceLangLabel === 'function') updateVoiceLangLabel();
+}
+
+function loadLanguage() {
+  const saved = localStorage.getItem(CONFIG.LANG_KEY);
+  if (saved && (saved === 'en' || saved === 'ta')) {
+    switchLanguage(saved);
+  }
+}
+
+function t(key) {
+  return i18n[currentLang][key] || i18n['en'][key] || key;
+}
+
+// ═══ Voice Assistant (Professional Panel UI) ═══
+let voiceRecognition = null;
+let voiceDetectedValues = {};
+let voiceIsListening = false;
+
+// Farmer Q&A Knowledge Base
+const farmerQA = {
+  'black soil': 'Black soil is excellent for cotton, soybean, sorghum, and sunflower. It retains moisture well and is rich in calcium, magnesium, and iron.',
+  'red soil': 'Red soil is suitable for groundnut, millets, potato, and tomato. Consider adding organic manure to improve fertility.',
+  'sandy soil': 'Sandy soil works well for watermelon, groundnut, coconut, and carrots. It drains quickly, so choose drought-resistant crops.',
+  'clay soil': 'Clay soil holds water well. Rice, wheat, and sugarcane grow well. Ensure proper drainage to avoid waterlogging.',
+  'loamy soil': 'Loamy soil is ideal for most crops — wheat, sugarcane, cotton, and pulses. It has the best balance of drainage and moisture retention.',
+  'rainy season': 'For rainy/Kharif season (Jun–Nov): Rice, maize, cotton, soybean, groundnut, and jute are excellent choices.',
+  'winter season': 'For winter/Rabi season (Nov–Mar): Wheat, chickpea, mustard, lentil, potato, and onion perform well.',
+  'summer season': 'For summer season: Watermelon, mango, papaya, tomato, and sunflower are great options. Ensure adequate irrigation.',
+  'fertilizer': 'For balanced soil: Use Urea for nitrogen, DAP for phosphorus, and MOP for potassium. Get soil tested first for precise recommendations.',
+  'organic farming': 'For organic farming, use vermicompost, cow dung manure, neem cake, and green manuring. Rotate crops with legumes to fix nitrogen naturally.',
+  'best crop': 'The best crop depends on your soil nutrients, pH, climate, and water availability. Enter your soil values in the form and let our AI recommend the perfect crop!',
+  'rice': 'Rice needs nitrogen 60-120, phosphorus 30-60, warm temperature 20-37°C, and high rainfall 150-300mm. Best in Kharif season.',
+  'wheat': 'Wheat needs nitrogen 100-140, cool temperature 10-25°C, and moderate rainfall 50-100mm. Best in Rabi season.',
+};
+
+function openVoiceAssistant() {
+  const panel = document.getElementById('voicePanel');
+  const overlay = document.getElementById('voiceOverlay');
+  const fab = document.getElementById('voiceFab');
+
+  panel.classList.add('open');
+  overlay.classList.add('open');
+  fab.style.display = 'none';
+
+  // Update language indicator
+  updateVoiceLangLabel();
+  resetVoiceUI();
+}
+
+function closeVoiceAssistant() {
+  const panel = document.getElementById('voicePanel');
+  const overlay = document.getElementById('voiceOverlay');
+  const fab = document.getElementById('voiceFab');
+
+  // Stop listening if active
+  if (voiceRecognition) {
+    voiceRecognition.stop();
+    voiceRecognition = null;
+    voiceIsListening = false;
+  }
+
+  panel.classList.remove('open');
+  overlay.classList.remove('open');
+  fab.style.display = 'flex';
+}
+
+function resetVoiceUI() {
+  document.getElementById('voiceIdleState').style.display = 'block';
+  document.getElementById('voiceListeningState').style.display = 'none';
+  document.getElementById('voiceProcessingState').style.display = 'none';
+  document.getElementById('voiceTranscriptArea').style.display = 'none';
+  document.getElementById('voiceValuesArea').style.display = 'none';
+  document.getElementById('voiceAnswerArea').style.display = 'none';
+  document.getElementById('voiceActionBtns').style.display = 'none';
+  document.getElementById('voiceMicBtn').style.display = 'flex';
+
+  const micBtn = document.getElementById('voiceMicBtn');
+  micBtn.classList.remove('listening');
+  document.getElementById('voiceMicBtnIcon').textContent = '🎤';
+
+  voiceDetectedValues = {};
+  voiceIsListening = false;
+}
+
+function updateVoiceLangLabel() {
+  const label = document.getElementById('voiceLangLabel');
+  if (label) {
+    label.textContent = currentLang === 'ta' ? '🌐 தமிழ் (IN)' : '🌐 English (IN)';
+  }
+}
+
+function toggleVoiceListening() {
+  if (voiceIsListening) {
+    stopVoiceListening();
+  } else {
+    startVoiceListening();
+  }
+}
+
+function startVoiceListening() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    showVoiceError(currentLang === 'ta'
+      ? 'இந்த உலாவியில் குரல் உள்ளீடு ஆதரிக்கப்படவில்லை. Chrome பயன்படுத்தவும்.'
+      : 'Voice input is not supported in this browser. Please use Chrome.');
+    return;
+  }
+
+  voiceRecognition = new SpeechRecognition();
+  voiceRecognition.lang = currentLang === 'ta' ? 'ta-IN' : 'en-IN';
+  voiceRecognition.continuous = false;
+  voiceRecognition.interimResults = false;
+  voiceRecognition.maxAlternatives = 1;
+
+  voiceIsListening = true;
+
+  // Show listening state
+  document.getElementById('voiceIdleState').style.display = 'none';
+  document.getElementById('voiceListeningState').style.display = 'block';
+  document.getElementById('voiceProcessingState').style.display = 'none';
+  document.getElementById('voiceTranscriptArea').style.display = 'none';
+  document.getElementById('voiceValuesArea').style.display = 'none';
+  document.getElementById('voiceAnswerArea').style.display = 'none';
+  document.getElementById('voiceActionBtns').style.display = 'none';
+
+  const micBtn = document.getElementById('voiceMicBtn');
+  micBtn.classList.add('listening');
+  document.getElementById('voiceMicBtnIcon').textContent = '⏹';
+
+  voiceRecognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    console.log('Voice transcript:', transcript);
+    handleVoiceResult(transcript);
+  };
+
+  voiceRecognition.onerror = (event) => {
+    console.warn('Voice error:', event.error);
+    voiceIsListening = false;
+    micBtn.classList.remove('listening');
+    document.getElementById('voiceMicBtnIcon').textContent = '🎤';
+
+    if (event.error === 'no-speech') {
+      showVoiceError(currentLang === 'ta'
+        ? 'குரல் கேட்கப்படவில்லை. மீண்டும் பேசவும்.'
+        : 'No speech detected. Please try again.');
+    } else {
+      showVoiceError(currentLang === 'ta'
+        ? 'பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.'
+        : 'An error occurred. Please try again.');
+    }
+    voiceRecognition = null;
+  };
+
+  voiceRecognition.onend = () => {
+    voiceIsListening = false;
+    micBtn.classList.remove('listening');
+    document.getElementById('voiceMicBtnIcon').textContent = '🎤';
+    voiceRecognition = null;
+  };
+
+  voiceRecognition.start();
+}
+
+function stopVoiceListening() {
+  if (voiceRecognition) {
+    voiceRecognition.stop();
+    voiceRecognition = null;
+  }
+  voiceIsListening = false;
+  const micBtn = document.getElementById('voiceMicBtn');
+  micBtn.classList.remove('listening');
+  document.getElementById('voiceMicBtnIcon').textContent = '🎤';
+}
+
+function showVoiceError(message) {
+  document.getElementById('voiceIdleState').style.display = 'none';
+  document.getElementById('voiceListeningState').style.display = 'none';
+  document.getElementById('voiceProcessingState').style.display = 'none';
+
+  const transcriptArea = document.getElementById('voiceTranscriptArea');
+  transcriptArea.style.display = 'block';
+  document.getElementById('voiceTranscriptText').textContent = message;
+  document.getElementById('voiceTranscriptText').style.borderLeftColor = '#e74c3c';
+
+  setTimeout(() => {
+    document.getElementById('voiceTranscriptText').style.borderLeftColor = '';
+    resetVoiceUI();
+  }, 3500);
+}
+
+function handleVoiceResult(transcript) {
+  // Show processing
+  document.getElementById('voiceListeningState').style.display = 'none';
+  document.getElementById('voiceProcessingState').style.display = 'block';
+
+  setTimeout(() => {
+    document.getElementById('voiceProcessingState').style.display = 'none';
+
+    // Show transcript
+    const transcriptArea = document.getElementById('voiceTranscriptArea');
+    transcriptArea.style.display = 'block';
+    document.getElementById('voiceTranscriptText').textContent = `"${transcript}"`;
+
+    // Check if it's a question or soil values
+    const isQuestion = detectFarmerQuestion(transcript);
+
+    if (isQuestion) {
+      handleFarmerQuestion(transcript);
+    } else {
+      extractAndShowValues(transcript);
+    }
+  }, 800);
+}
+
+function detectFarmerQuestion(text) {
+  const questionWords = ['which', 'what', 'how', 'suggest', 'best', 'recommend',
+    'should', 'can', 'does', 'tell', 'explain', 'crop for', 'soil type',
+    'எந்த', 'என்ன', 'எப்படி', 'பரிந்துரை', 'சிறந்த'];
+  const lower = text.toLowerCase();
+  return questionWords.some(w => lower.includes(w));
+}
+
+function handleFarmerQuestion(question) {
+  const lower = question.toLowerCase();
+  let answer = '';
+
+  // Match against Q&A knowledge base
+  for (const [key, value] of Object.entries(farmerQA)) {
+    if (lower.includes(key)) {
+      answer = value;
+      break;
+    }
+  }
+
+  if (!answer) {
+    answer = currentLang === 'ta'
+      ? 'உங்கள் கேள்விக்கு பதிலளிக்க, மேலே உள்ள படிவத்தில் உங்கள் மண் மதிப்புகளை உள்ளிட்டு "Predict" பொத்தானை அழுத்தவும். எங்கள் AI சிறந்த பயிரை பரிந்துரைக்கும்!'
+      : 'To answer your question accurately, please enter your soil values in the form above and click "Predict". Our AI will recommend the best crop based on your specific conditions!';
+  }
+
+  // Show question & answer
+  const answerArea = document.getElementById('voiceAnswerArea');
+  answerArea.style.display = 'flex';
+  document.getElementById('voiceQuestionBubble').textContent = question;
+  document.getElementById('voiceAnswerBubble').textContent = answer;
+
+  // Hide mic, show action buttons
+  document.getElementById('voiceMicBtn').style.display = 'none';
+  document.getElementById('voiceActionBtns').style.display = 'flex';
+
+  // Speak the answer aloud (TTS)
+  speakText(answer);
+}
+
+function extractAndShowValues(transcript) {
+  const normalized = transcript.toLowerCase().replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
+
+  const patterns = [
+    { field: 'nitrogen', label: 'Nitrogen (N)', keywords: ['nitrogen', 'நைட்ரஜன்', 'n '] },
+    { field: 'phosphorus', label: 'Phosphorus (P)', keywords: ['phosphorus', 'phosphorous', 'பாஸ்பரஸ்', 'p '] },
+    { field: 'potassium', label: 'Potassium (K)', keywords: ['potassium', 'பொட்டாசியம்', 'k '] },
+    { field: 'ph', label: 'pH', keywords: ['ph', 'p h', 'p.h', 'பிஎச்'] },
+    { field: 'temperature', label: 'Temperature', keywords: ['temperature', 'temp', 'வெப்பநிலை', 'degree'] },
+    { field: 'humidity', label: 'Humidity', keywords: ['humidity', 'ஈரப்பதம்', 'humid'] },
+    { field: 'rainfall', label: 'Rainfall', keywords: ['rainfall', 'rain', 'மழை', 'மழையளவு'] },
+  ];
+
+  voiceDetectedValues = {};
+
+  // Try keyword + number matching
+  patterns.forEach(({ field, label, keywords }) => {
+    for (const keyword of keywords) {
+      const regex = new RegExp(keyword + '\\s*(\\d+\\.?\\d*)', 'i');
+      const match = normalized.match(regex);
+      if (match) {
+        voiceDetectedValues[field] = { value: parseFloat(match[1]), label };
+        break;
+      }
+    }
+  });
+
+  // Fallback: extract numbers sequentially
+  if (Object.keys(voiceDetectedValues).length === 0) {
+    const numbers = normalized.match(/\d+\.?\d*/g);
+    if (numbers && numbers.length > 0) {
+      const fields = [
+        { field: 'nitrogen', label: 'Nitrogen (N)' },
+        { field: 'phosphorus', label: 'Phosphorus (P)' },
+        { field: 'potassium', label: 'Potassium (K)' },
+        { field: 'ph', label: 'pH' },
+        { field: 'temperature', label: 'Temperature' },
+        { field: 'humidity', label: 'Humidity' },
+        { field: 'rainfall', label: 'Rainfall' },
+      ];
+      numbers.forEach((num, i) => {
+        if (i < fields.length) {
+          voiceDetectedValues[fields[i].field] = { value: parseFloat(num), label: fields[i].label };
+        }
+      });
+    }
+  }
+
+  if (Object.keys(voiceDetectedValues).length > 0) {
+    // Show detected values card
+    const valuesArea = document.getElementById('voiceValuesArea');
+    const valuesGrid = document.getElementById('voiceValuesGrid');
+    valuesArea.style.display = 'block';
+
+    valuesGrid.innerHTML = Object.entries(voiceDetectedValues).map(([field, { value, label }]) => `
+      <div class="voice-value-item">
+        <span class="voice-value-name">${label}</span>
+        <span class="voice-value-num">${value}</span>
+      </div>
+    `).join('');
+
+    // Hide mic, show action buttons
+    document.getElementById('voiceMicBtn').style.display = 'none';
+    document.getElementById('voiceActionBtns').style.display = 'flex';
+
+    // TTS confirmation
+    const count = Object.keys(voiceDetectedValues).length;
+    speakText(currentLang === 'ta'
+      ? `${count} மதிப்புகள் கண்டறியப்பட்டன. படிவத்தில் நிரப்ப "Apply" அழுத்தவும்.`
+      : `${count} value${count > 1 ? 's' : ''} detected. Tap Apply to fill the form.`);
+  } else {
+    // No values found, try as a question
+    handleFarmerQuestion(transcript);
+  }
+}
+
+function applyVoiceValues() {
+  let count = 0;
+  Object.entries(voiceDetectedValues).forEach(([field, { value }]) => {
+    const input = document.getElementById(field);
+    if (input) {
+      input.value = value;
+      // Green flash animation
+      input.style.transition = 'background 0.3s, box-shadow 0.3s';
+      input.style.background = 'rgba(139,195,74,0.2)';
+      input.style.boxShadow = '0 0 0 2px rgba(139,195,74,0.4)';
+      setTimeout(() => {
+        input.style.background = '';
+        input.style.boxShadow = '';
+      }, 2500);
+      count++;
+    }
+  });
+
+  closeVoiceAssistant();
+  navTo('predict');
+  showNotification(currentLang === 'ta'
+    ? `🎤 ${count} மதிப்புகள் குரல் மூலம் நிரப்பப்பட்டன!`
+    : `🎤 ${count} value${count > 1 ? 's' : ''} applied to form from voice input!`);
+}
+
+function retryVoice() {
+  resetVoiceUI();
+}
+
+// Text-to-Speech output
+function speakText(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = currentLang === 'ta' ? 'ta-IN' : 'en-IN';
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
+// Legacy compatibility — keep old function name working
+function startVoiceInput() {
+  openVoiceAssistant();
+  setTimeout(() => startVoiceListening(), 400);
+}
+function showVoiceStatus() {}
+function hideVoiceStatus() {}
+
+// ═══ Crop Profit Data ═══
+const cropProfitData = {
+  rice:       { pricePerKg: 22, costPerAcre: 12000 },
+  wheat:      { pricePerKg: 25, costPerAcre: 10000 },
+  maize:      { pricePerKg: 20, costPerAcre: 9000 },
+  cotton:     { pricePerKg: 65, costPerAcre: 18000 },
+  sugarcane:  { pricePerKg: 3.5, costPerAcre: 25000 },
+  chickpea:   { pricePerKg: 55, costPerAcre: 8000 },
+  mango:      { pricePerKg: 40, costPerAcre: 20000 },
+  banana:     { pricePerKg: 15, costPerAcre: 22000 },
+  grapes:     { pricePerKg: 50, costPerAcre: 30000 },
+  apple:      { pricePerKg: 80, costPerAcre: 35000 },
+  lentil:     { pricePerKg: 60, costPerAcre: 7000 },
+  jute:       { pricePerKg: 45, costPerAcre: 10000 },
+  coconut:    { pricePerKg: 12, costPerAcre: 15000 },
+  coffee:     { pricePerKg: 250, costPerAcre: 28000 },
+  potato:     { pricePerKg: 15, costPerAcre: 14000 },
+  tomato:     { pricePerKg: 20, costPerAcre: 12000 },
+  onion:      { pricePerKg: 18, costPerAcre: 10000 },
+  soybean:    { pricePerKg: 45, costPerAcre: 9000 },
+  groundnut:  { pricePerKg: 55, costPerAcre: 11000 },
+  mustard:    { pricePerKg: 50, costPerAcre: 8000 },
+  watermelon: { pricePerKg: 8, costPerAcre: 13000 },
+  papaya:     { pricePerKg: 12, costPerAcre: 16000 },
+};
+
+// ═══ Soil Health Score Engine ═══
+function calculateSoilHealth(inputs) {
+  const n = parseFloat(inputs.n) || 0;
+  const p = parseFloat(inputs.p) || 0;
+  const k = parseFloat(inputs.k) || 0;
+  const ph = parseFloat(inputs.ph) || 7;
+
+  // Nitrogen score (optimal: 50-100)
+  let nScore;
+  if (n >= 50 && n <= 100) nScore = 100;
+  else if (n >= 30 && n < 50) nScore = 60 + ((n - 30) / 20) * 40;
+  else if (n > 100 && n <= 140) nScore = 60 + ((140 - n) / 40) * 40;
+  else if (n < 30) nScore = (n / 30) * 60;
+  else nScore = Math.max(0, 60 - ((n - 140) / 20) * 30);
+
+  // Phosphorus score (optimal: 40-80)
+  let pScore;
+  if (p >= 40 && p <= 80) pScore = 100;
+  else if (p >= 20 && p < 40) pScore = 60 + ((p - 20) / 20) * 40;
+  else if (p > 80 && p <= 120) pScore = 60 + ((120 - p) / 40) * 40;
+  else if (p < 20) pScore = (p / 20) * 60;
+  else pScore = Math.max(0, 60 - ((p - 120) / 30) * 30);
+
+  // Potassium score (optimal: 40-80)
+  let kScore;
+  if (k >= 40 && k <= 80) kScore = 100;
+  else if (k >= 20 && k < 40) kScore = 60 + ((k - 20) / 20) * 40;
+  else if (k > 80 && k <= 130) kScore = 60 + ((130 - k) / 50) * 40;
+  else if (k < 20) kScore = (k / 20) * 60;
+  else kScore = Math.max(0, 60 - ((k - 130) / 40) * 30);
+
+  // pH score (optimal: 6.0-7.5)
+  let phScore;
+  if (ph >= 6 && ph <= 7.5) phScore = 100;
+  else if (ph >= 5 && ph < 6) phScore = 60 + ((ph - 5) / 1) * 40;
+  else if (ph > 7.5 && ph <= 8.5) phScore = 60 + ((8.5 - ph) / 1) * 40;
+  else if (ph < 5) phScore = Math.max(0, (ph / 5) * 60);
+  else phScore = Math.max(0, 60 - ((ph - 8.5) / 2) * 40);
+
+  // Overall score (weighted average)
+  const overall = Math.round(nScore * 0.3 + pScore * 0.25 + kScore * 0.25 + phScore * 0.2);
+
+  let category, categoryClass;
+  if (overall >= 70) { category = t('soil_health_good'); categoryClass = 'good'; }
+  else if (overall >= 40) { category = t('soil_health_moderate'); categoryClass = 'moderate'; }
+  else { category = t('soil_health_poor'); categoryClass = 'poor'; }
+
+  // Generate tips
+  const tips = [];
+  if (nScore < 60) tips.push(t('tip_add_nitrogen'));
+  if (pScore < 60) tips.push(t('tip_add_phosphorus'));
+  if (kScore < 60) tips.push(t('tip_add_potassium'));
+  if (phScore < 60) tips.push(t('tip_adjust_ph'));
+  if (tips.length === 0) tips.push(t('tip_soil_great'));
+
+  return {
+    overall, category, categoryClass,
+    scores: { n: Math.round(nScore), p: Math.round(pScore), k: Math.round(kScore), ph: Math.round(phScore) },
+    tips,
+  };
+}
+
+function renderSoilHealth(inputs) {
+  const health = calculateSoilHealth(inputs);
+  const section = document.getElementById('soilHealthSection');
+  if (!section) return;
+
+  const scoreColor = health.categoryClass === 'good' ? '#27ae60' :
+                     health.categoryClass === 'moderate' ? '#f39c12' : '#e74c3c';
+
+  const barClass = (score) => score >= 70 ? 'good' : score >= 40 ? 'moderate' : 'poor';
+
+  section.innerHTML = `
+    <div class="soil-health-card health-${health.categoryClass}">
+      <div class="soil-health-header">
+        <div class="soil-health-title">${t('soil_health_title')}</div>
+        <span class="soil-health-badge ${health.categoryClass}">${health.category}</span>
+      </div>
+      <div class="soil-health-score-wrap">
+        <div class="soil-score-circle" style="--score-color: ${scoreColor}; --score-pct: ${health.overall}%;">
+          <span class="soil-score-num ${health.categoryClass}">${health.overall}</span>
+          <span class="soil-score-label">${t('soil_health_out_of')}</span>
+        </div>
+        <div class="soil-health-bars">
+          <div class="soil-bar-item">
+            <div class="soil-bar-label"><span>${t('label_nitrogen')}</span><span>${health.scores.n}%</span></div>
+            <div class="soil-bar"><div class="soil-bar-fill ${barClass(health.scores.n)}" data-width="${health.scores.n}"></div></div>
+          </div>
+          <div class="soil-bar-item">
+            <div class="soil-bar-label"><span>${t('label_phosphorus')}</span><span>${health.scores.p}%</span></div>
+            <div class="soil-bar"><div class="soil-bar-fill ${barClass(health.scores.p)}" data-width="${health.scores.p}"></div></div>
+          </div>
+          <div class="soil-bar-item">
+            <div class="soil-bar-label"><span>${t('label_potassium')}</span><span>${health.scores.k}%</span></div>
+            <div class="soil-bar"><div class="soil-bar-fill ${barClass(health.scores.k)}" data-width="${health.scores.k}"></div></div>
+          </div>
+          <div class="soil-bar-item">
+            <div class="soil-bar-label"><span>${t('label_ph')}</span><span>${health.scores.ph}%</span></div>
+            <div class="soil-bar"><div class="soil-bar-fill ${barClass(health.scores.ph)}" data-width="${health.scores.ph}"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="soil-health-tips">
+        <h4>💡 ${currentLang === 'ta' ? 'பரிந்துரைகள்' : 'Recommendations'}</h4>
+        <ul>${health.tips.map(tip => `<li>▸ ${tip}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+}
+
+function renderProfitPrediction(inputs, results) {
+  const section = document.getElementById('profitSection');
+  if (!section) return;
+
+  const cardsHTML = results.slice(0, 3).map((r, i) => {
+    const c = cropData[r.crop];
+    const profitInfo = cropProfitData[r.crop] || { pricePerKg: 20, costPerAcre: 10000 };
+    const yld = predictYield(r.rawScore, r.crop);
+    const revenue = Math.round(yld.estimated * profitInfo.pricePerKg);
+    const profit = revenue - profitInfo.costPerAcre;
+
+    return `
+      <div class="profit-card" style="animation-delay: ${i * 0.1}s">
+        <div class="profit-card-header">
+          <span class="profit-card-emoji">${c.emoji}</span>
+          <div>
+            <div class="profit-card-name">${c.name}</div>
+            <div class="profit-card-type">${c.type}</div>
+          </div>
+        </div>
+        <div class="profit-metrics">
+          <div class="profit-metric">
+            <div class="profit-metric-val">${yld.estimated} kg</div>
+            <div class="profit-metric-key">${t('yield_per_acre')}</div>
+          </div>
+          <div class="profit-metric">
+            <div class="profit-metric-val">₹${profitInfo.pricePerKg}/kg</div>
+            <div class="profit-metric-key">${t('market_price')}</div>
+          </div>
+          <div class="profit-metric">
+            <div class="profit-metric-val">₹${revenue.toLocaleString('en-IN')}</div>
+            <div class="profit-metric-key">${currentLang === 'ta' ? 'வருவாய் / ஏக்கர்' : 'Revenue / Acre'}</div>
+          </div>
+          <div class="profit-metric">
+            <div class="profit-metric-val">₹${profitInfo.costPerAcre.toLocaleString('en-IN')}</div>
+            <div class="profit-metric-key">${t('cost_per_acre')}</div>
+          </div>
+        </div>
+        <div class="profit-total">
+          <div class="profit-total-label">${t('est_profit')}</div>
+          <div class="profit-total-val" style="color: ${profit >= 0 ? '#27ae60' : '#e74c3c'}">
+            ${profit >= 0 ? '₹' + profit.toLocaleString('en-IN') : '-₹' + Math.abs(profit).toLocaleString('en-IN')}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="profit-section-title">${t('profit_title')}</div>
+    <div class="profit-grid">${cardsHTML}</div>
+  `;
+}
 
 // ── Crop Knowledge Base (22 crops) ──
 const cropData = {
@@ -632,7 +1356,7 @@ function renderResults(inputs, results) {
 
         <div class="confidence-bar-wrap">
           <div class="confidence-label">
-            <span>Suitability Score</span>
+            <span>${t('confidence')}</span>
             <span><strong>${pct}%</strong></span>
           </div>
           <div class="confidence-bar">
@@ -643,14 +1367,14 @@ function renderResults(inputs, results) {
         <span class="risk-badge ${risk.class}">${risk.icon} ${risk.level}</span>
 
         <div style="margin-top:12px">
-          <div class="crop-detail-row"><span>🌱 Growing Period</span><span class="crop-detail-val">${c.growingPeriod}</span></div>
-          <div class="crop-detail-row"><span>💧 Water Requirement</span><span class="crop-detail-val">${c.waterReq}</span></div>
-          <div class="crop-detail-row"><span>📦 Est. Yield</span><span class="crop-detail-val">${yld.estimated} ${yld.unit}</span></div>
-          <div class="crop-detail-row"><span>⚠️ Common Diseases</span><span class="crop-detail-val">${c.diseases.slice(0,2).join(', ')}</span></div>
+          <div class="crop-detail-row"><span>${t('growing_period')}</span><span class="crop-detail-val">${c.growingPeriod}</span></div>
+          <div class="crop-detail-row"><span>${t('water_req')}</span><span class="crop-detail-val">${c.waterReq}</span></div>
+          <div class="crop-detail-row"><span>${t('est_yield')}</span><span class="crop-detail-val">${yld.estimated} ${yld.unit}</span></div>
+          <div class="crop-detail-row"><span>${t('common_diseases')}</span><span class="crop-detail-val">${c.diseases.slice(0,2).join(', ')}</span></div>
         </div>
 
         <div class="fert-rec">
-          <div class="fert-title">🧪 Fertilizer Recommendation</div>
+          <div class="fert-title">${t('fert_title')}</div>
           <div class="fert-grid">
             <div class="fert-item"><div class="fert-val">${fert.urea} kg</div><div class="fert-label">Urea (N)</div></div>
             <div class="fert-item"><div class="fert-val">${fert.dap} kg</div><div class="fert-label">DAP (P)</div></div>
@@ -670,9 +1394,15 @@ function renderResults(inputs, results) {
   rs.classList.add('visible');
   rs.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+  // Render Soil Health Score
+  renderSoilHealth(inputs);
+
+  // Render Crop Profit Prediction
+  renderProfitPrediction(inputs, results);
+
   // Animate bars
   setTimeout(() => {
-    document.querySelectorAll('.confidence-fill, .fi-fill').forEach(el => {
+    document.querySelectorAll('.confidence-fill, .fi-fill, .soil-bar-fill').forEach(el => {
       el.style.width = el.dataset.width + '%';
     });
   }, 300);
@@ -1208,6 +1938,7 @@ function resetForm() {
 // ═══ Initialization ═══
 document.addEventListener('DOMContentLoaded', () => {
   loadDarkMode();
+  loadLanguage();
   populateCompareDropdowns();
   renderHistory();
 
