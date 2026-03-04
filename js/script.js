@@ -93,6 +93,19 @@ const i18n = {
     guided_switch_lab: 'Switch to Lab Mode →',
     guided_prev: '← Previous', guided_next: 'Next →',
     guided_step_of: 'Step {current} of {total}',
+    guided_all_done: 'All steps completed ✓',
+    guided_analysing: '⏳ Analysing...',
+    // Guided questions & options
+    nitrogenQuestion: 'Are leaves pale yellow?',
+    phosphorusQuestion: 'Are plants flowering poorly?',
+    potassiumQuestion: 'Are leaf edges brown or burnt?',
+    temperatureQuestion: 'How is the weather currently?',
+    humidityQuestion: 'How does the air feel?',
+    rainfallQuestion: 'How has rainfall been this season?',
+    phQuestion: 'What type of soil do you have?',
+    yes: 'Yes', no: 'No',
+    low: 'Low', medium: 'Moderate', high: 'High',
+    acidic_soil: 'Acidic', neutral_soil: 'Neutral', alkaline_soil: 'Alkaline',
     // Location & weather
     form_location: '📍 Location & Weather',
     select_region: 'Select Region',
@@ -245,6 +258,19 @@ const i18n = {
     guided_switch_lab: 'ஆய்வக முறைக்கு மாறு →',
     guided_prev: '← முந்தைய', guided_next: 'அடுத்து →',
     guided_step_of: 'படி {current} / {total}',
+    guided_all_done: 'அனைத்து படிகளும் நிறைவடைந்தன ✓',
+    guided_analysing: '⏳ பகுப்பாய்வு செய்கிறது...',
+    // Guided questions & options
+    nitrogenQuestion: 'இலைகள் மஞ்சள் நிறமாக உள்ளதா?',
+    phosphorusQuestion: 'தாவரங்களில் மலர்ச்சி குறைவா?',
+    potassiumQuestion: 'இலை விளிம்புகள் பழுப்பு நிறமாக உள்ளதா?',
+    temperatureQuestion: 'இப்போது வானிலை எப்படி உள்ளது?',
+    humidityQuestion: 'காற்றில் ஈரப்பதம் எப்படி உள்ளது?',
+    rainfallQuestion: 'இந்த பருவத்தில் மழை நிலை எப்படி?',
+    phQuestion: 'உங்கள் மண் வகை என்ன?',
+    yes: 'ஆம்', no: 'இல்லை',
+    low: 'குறைவு', medium: 'மிதமான', high: 'அதிகம்',
+    acidic_soil: 'அமிலத்தன்மை', neutral_soil: 'நடுநிலை', alkaline_soil: 'காரத்தன்மை',
     // Location & weather
     form_location: '📍 இடம் & வானிலை',
     select_region: 'பிராந்தியத்தை தேர்வு செய்யவும்',
@@ -2147,7 +2173,7 @@ function showGuidedPreview() {
   const progressBar = document.getElementById('guidedProgressBar');
   if (progressBar) progressBar.style.width = '100%';
   const stepLabel = document.getElementById('guidedStepLabel');
-  if (stepLabel) stepLabel.textContent = 'All steps completed ✓';
+  if (stepLabel) stepLabel.textContent = t('guided_all_done');
 }
 
 async function guidedPredict() {
@@ -2164,7 +2190,7 @@ async function guidedPredict() {
     document.getElementById('humidity').value = values.h;
     document.getElementById('rainfall').value = values.r;
 
-    if (btn) { btn.textContent = '⏳ Analysing...'; btn.disabled = true; }
+    if (btn) { btn.textContent = t('guided_analysing'); btn.disabled = true; }
 
     await new Promise(r => setTimeout(r, 1800));
 
