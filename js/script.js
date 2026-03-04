@@ -73,6 +73,98 @@ const i18n = {
     tip_add_potassium: 'Apply MOP (Muriate of Potash) for potassium',
     tip_adjust_ph: 'Consider lime (for acidity) or sulfur (for alkalinity) to adjust pH',
     tip_soil_great: 'Your soil nutrients are well-balanced! Maintain with regular testing.',
+    // Hero stats
+    stat_crops: 'Crop varieties', stat_models: 'ML Models', stat_accuracy: 'Model accuracy', stat_params: 'Parameters analysed',
+    // Param list
+    param_nutrients_title: 'Soil Nutrients', param_nutrients_desc: 'N, P, K values indicate fertility',
+    param_ph_title: 'Soil pH', param_ph_desc: 'Acidity level affects nutrient uptake',
+    param_climate_title: 'Climate', param_climate_desc: 'Temperature, humidity & rainfall',
+    param_models_title: 'AI Models', param_models_desc: '3 models compared for best results',
+    // Mode toggle
+    mode_lab: 'Manual Lab Mode', mode_lab_desc: 'Enter exact soil test values',
+    mode_guided: 'Smart Farmer Assistant', mode_guided_desc: 'Answer simple field questions',
+    // Guided mode
+    guided_badge: '🧠 AI Field Diagnosis',
+    guided_subtitle: "Answer simple questions about your field — we'll estimate soil values using AI",
+    guided_preview_title: '🧠 AI-Estimated Values',
+    guided_preview_subtitle: 'Based on your field observations, here are the estimated values:',
+    guided_preview_note: '💡 These are AI estimations. For precise values, get a lab soil test done at your local agriculture center.',
+    guided_predict_btn: '🌱 Predict Best Crops',
+    guided_switch_lab: 'Switch to Lab Mode →',
+    guided_prev: '← Previous', guided_next: 'Next →',
+    guided_step_of: 'Step {current} of {total}',
+    // Location & weather
+    form_location: '📍 Location & Weather',
+    select_region: 'Select Region',
+    region_north: 'North India (Punjab, Haryana, UP)',
+    region_south: 'South India (TN, Karnataka, Kerala)',
+    region_east: 'East India (WB, Odisha, Bihar)',
+    region_west: 'West India (Maharashtra, Gujarat)',
+    region_central: 'Central India (MP, Chhattisgarh)',
+    region_northeast: 'Northeast India (Assam, Meghalaya)',
+    city_placeholder: 'City name (e.g. Mumbai)',
+    weather_btn: '🌤️ Auto-fill Weather',
+    // ML Model
+    form_model: '🤖 ML Model',
+    model_rf: 'Random Forest', model_dt: 'Decision Tree', model_xgb: 'XGBoost',
+    predict_btn: '🌱 Predict Best Crops', predict_loading: 'Analysing with AI…',
+    // Export
+    export_csv: '📄 Export CSV', export_print: '🖨️ Print Report',
+    export_compare: '⚖️ Compare Crops', export_retry: '← Try Different Values',
+    // Dashboard
+    dash_label: 'Analytics', dash_title: 'Crop Suitability Dashboard',
+    dash_chart_score: '📊 Suitability Score — All 22 Crops',
+    dash_chart_type: '🥧 Crop Type Distribution',
+    // Compare
+    compare_label: 'Comparison', compare_title: 'Compare crops side by side',
+    compare_desc: 'Select 2 or 3 crops to compare their requirements, yield, and fertilizer needs.',
+    select_crop_1: 'Select Crop 1', select_crop_2: 'Select Crop 2', select_crop_3: 'Select Crop 3 (optional)',
+    compare_btn: '⚖️ Compare',
+    compare_empty: 'Select crops above and click Compare to see a detailed side-by-side analysis.',
+    compare_select_2: 'Please select at least 2 crops to compare.',
+    compare_param: 'Parameter',
+    // History
+    history_label: 'Prediction History', history_title: 'Your past analyses',
+    history_desc: 'Track your farm decisions over time. Reload any past prediction to re-analyse.',
+    history_clear: '🗑️ Clear History',
+    history_empty: '📭 No predictions yet. Start by analysing your farm data!',
+    history_reload: '🔄 Reload',
+    history_loaded: '📋 Previous inputs loaded. Click Predict to re-analyse!',
+    history_cleared: '🗑️ History cleared',
+    history_confirm_clear: 'Clear all prediction history?',
+    // How it works
+    how_step1_title: 'Enter Parameters',
+    how_step1_desc: 'Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall. Auto-fill weather data from your location or select a region.',
+    how_step2_title: 'AI Models Analyse',
+    how_step2_desc: 'Choose from Random Forest, Decision Tree, or XGBoost. Each model processes your inputs against patterns from thousands of agricultural data points.',
+    how_step3_title: 'Get Full Report',
+    how_step3_desc: 'Receive ranked crops with confidence scores, yield predictions, fertilizer advice, risk levels, and feature importance. Export as CSV or compare crops side-by-side.',
+    // Footer
+    footer_desc: 'Smart Crop Recommendation System · Built with ML & ♥',
+    footer_stats: '22 crops · 3 ML models · Weather API · Export reports',
+    // Dynamic content in renderResults
+    summary_nitrogen: 'Nitrogen', summary_phosphorus: 'Phosphorus', summary_potassium: 'Potassium',
+    summary_ph: 'pH', summary_temp: 'Temp (°C)', summary_humidity: 'Humidity', summary_rainfall: 'Rainfall (mm)',
+    summary_crops_found: 'Crops found',
+    fi_title: '📊 Feature Importance — Why these crops?',
+    model_label: 'Model', accuracy_label: 'Accuracy', top_crops_shown: 'Top {n} crops shown',
+    // Compare table rows
+    ct_type: 'Type', ct_season: 'Season', ct_growing: 'Growing Period', ct_water: 'Water Requirement',
+    ct_yield: 'Est. Yield (kg/acre)', ct_n: 'N Range', ct_p: 'P Range', ct_k: 'K Range',
+    ct_ph: 'pH Range', ct_temp: 'Temp Range (°C)', ct_diseases: 'Diseases',
+    ct_suitability: 'Suitability Score', ct_urea: 'Urea (kg/acre)', ct_dap: 'DAP (kg/acre)', ct_mop: 'MOP (kg/acre)',
+    select_a_crop: 'Select a crop',
+    // Notifications
+    csv_downloaded: '📄 CSV report downloaded!',
+    print_opened: '🖨️ Print dialog opened',
+    run_prediction_first: 'Run a prediction first!',
+    alert_fill_all: 'Please fill in all 7 parameters before predicting.',
+    alert_city_name: 'Please enter a city name to fetch weather data.',
+    alert_something_wrong: 'Something went wrong. Please try again.',
+    notify_weather_error: '❌ Could not fetch weather. Check city name.',
+    notify_select_option: '⚠️ Please select an option before continuing.',
+    notify_guided_complete: '🌾 Smart Farmer Assistant — Prediction complete!',
+    notify_guided_missing: '⚠️ Please answer all 7 questions. Missing step {step}.',
   },
   ta: {
     nav_home: 'முகப்பு', nav_predict: 'கணிப்பு', nav_compare: 'ஒப்பிடு',
@@ -133,6 +225,98 @@ const i18n = {
     tip_add_potassium: 'பொட்டாசியத்திற்கு MOP பயன்படுத்தவும்',
     tip_adjust_ph: 'pH சரிசெய்ய சுண்ணாம்பு அல்லது கந்தகம் சேர்க்கவும்',
     tip_soil_great: 'உங்கள் மண் ஊட்டச்சத்துகள் சீராக உள்ளன! தொடர்ந்து சோதனை செய்யுங்கள்.',
+    // Hero stats
+    stat_crops: 'பயிர் வகைகள்', stat_models: 'ML மாதிரிகள்', stat_accuracy: 'மாதிரி துல்லியம்', stat_params: 'பகுப்பாய்வு அளவுருக்கள்',
+    // Param list
+    param_nutrients_title: 'மண் ஊட்டச்சத்துகள்', param_nutrients_desc: 'N, P, K மதிப்புகள் வளத்தைக் குறிக்கின்றன',
+    param_ph_title: 'மண் pH', param_ph_desc: 'அமிலத்தன்மை ஊட்டச்சத்து உறிஞ்சுதலை பாதிக்கிறது',
+    param_climate_title: 'காலநிலை', param_climate_desc: 'வெப்பநிலை, ஈரப்பதம் & மழை',
+    param_models_title: 'AI மாதிரிகள்', param_models_desc: 'சிறந்த முடிவுகளுக்கு 3 மாதிரிகள் ஒப்பிடப்படுகின்றன',
+    // Mode toggle
+    mode_lab: 'ஆய்வக முறை', mode_lab_desc: 'சரியான மண் பரிசோதனை மதிப்புகளை உள்ளிடுங்கள்',
+    mode_guided: 'ஸ்மார்ட் விவசாய உதவியாளர்', mode_guided_desc: 'எளிய கள கேள்விகளுக்கு பதிலளியுங்கள்',
+    // Guided mode
+    guided_badge: '🧠 AI கள ஆய்வு',
+    guided_subtitle: 'உங்கள் வயல் பற்றிய எளிய கேள்விகளுக்கு பதிலளியுங்கள் — AI மூலம் மண் மதிப்புகளை மதிப்பிடுவோம்',
+    guided_preview_title: '🧠 AI மதிப்பிடப்பட்ட மதிப்புகள்',
+    guided_preview_subtitle: 'உங்கள் கள கவனிப்புகளின் அடிப்படையில், மதிப்பிடப்பட்ட மதிப்புகள்:',
+    guided_preview_note: '💡 இவை AI மதிப்பீடுகள். துல்லியமான மதிப்புகளுக்கு, உங்கள் உள்ளூர் வேளாண்மை மையத்தில் ஆய்வக மண் பரிசோதனை செய்யுங்கள்.',
+    guided_predict_btn: '🌱 சிறந்த பயிர்களை கணிக்கவும்',
+    guided_switch_lab: 'ஆய்வக முறைக்கு மாறு →',
+    guided_prev: '← முந்தைய', guided_next: 'அடுத்து →',
+    guided_step_of: 'படி {current} / {total}',
+    // Location & weather
+    form_location: '📍 இடம் & வானிலை',
+    select_region: 'பிராந்தியத்தை தேர்வு செய்யவும்',
+    region_north: 'வட இந்தியா (பஞ்சாப், ஹரியானா, UP)',
+    region_south: 'தென் இந்தியா (TN, கர்நாடகா, கேரளா)',
+    region_east: 'கிழக்கு இந்தியா (WB, ஒடிசா, பீகார்)',
+    region_west: 'மேற்கு இந்தியா (மகாராஷ்டிரா, குஜராத்)',
+    region_central: 'மத்திய இந்தியா (MP, சத்தீஸ்கர்)',
+    region_northeast: 'வடகிழக்கு இந்தியா (அசாம், மேகாலயா)',
+    city_placeholder: 'நகரப் பெயர் (எ.கா. சென்னை)',
+    weather_btn: '🌤️ வானிலை தானாக நிரப்பு',
+    // ML Model
+    form_model: '🤖 ML மாதிரி',
+    model_rf: 'ரேண்டம் ஃபாரஸ்ட்', model_dt: 'டெசிஷன் ட்ரீ', model_xgb: 'XGBoost',
+    predict_btn: '🌱 சிறந்த பயிர்களை கணிக்கவும்', predict_loading: 'AI மூலம் பகுப்பாய்வு...',
+    // Export
+    export_csv: '📄 CSV ஏற்றுமதி', export_print: '🖨️ அறிக்கை அச்சிடு',
+    export_compare: '⚖️ பயிர்களை ஒப்பிடு', export_retry: '← வேறு மதிப்புகளை முயற்சிக்கவும்',
+    // Dashboard
+    dash_label: 'பகுப்பாய்வு', dash_title: 'பயிர் பொருத்த டாஷ்போர்டு',
+    dash_chart_score: '📊 பொருத்த மதிப்பெண் — அனைத்து 22 பயிர்கள்',
+    dash_chart_type: '🥧 பயிர் வகை விநியோகம்',
+    // Compare
+    compare_label: 'ஒப்பீடு', compare_title: 'பயிர்களை பக்கபக்கமாக ஒப்பிடுங்கள்',
+    compare_desc: '2 அல்லது 3 பயிர்களை தேர்வு செய்து அவற்றின் தேவைகள், விளைச்சல் மற்றும் உர தேவைகளை ஒப்பிடுங்கள்.',
+    select_crop_1: 'பயிர் 1 தேர்வு', select_crop_2: 'பயிர் 2 தேர்வு', select_crop_3: 'பயிர் 3 (விருப்பம்)',
+    compare_btn: '⚖️ ஒப்பிடு',
+    compare_empty: 'மேலே பயிர்களை தேர்ந்தெடுத்து ஒப்பிடு என்பதை கிளிக் செய்து விரிவான பகுப்பாய்வைக் காணவும்.',
+    compare_select_2: 'ஒப்பிட குறைந்தது 2 பயிர்களை தேர்ந்தெடுக்கவும்.',
+    compare_param: 'அளவுரு',
+    // History
+    history_label: 'கணிப்பு வரலாறு', history_title: 'உங்கள் முந்தைய பகுப்பாய்வுகள்',
+    history_desc: 'உங்கள் விவசாய முடிவுகளை காலப்போக்கில் கண்காணிக்கவும். பழைய கணிப்புகளை மீண்டும் பார்க்கலாம்.',
+    history_clear: '🗑️ வரலாற்றை அழி',
+    history_empty: '📭 இன்னும் கணிப்புகள் இல்லை. உங்கள் பண்ணை தரவை பகுப்பாய்வு செய்து தொடங்குங்கள்!',
+    history_reload: '🔄 மீண்டும் ஏற்று',
+    history_loaded: '📋 முந்தைய உள்ளீடுகள் ஏற்றப்பட்டன. மீண்டும் பகுப்பாய்வு செய்ய Predict கிளிக் செய்யுங்கள்!',
+    history_cleared: '🗑️ வரலாறு அழிக்கப்பட்டது',
+    history_confirm_clear: 'அனைத்து கணிப்பு வரலாற்றையும் அழிக்கவா?',
+    // How it works
+    how_step1_title: 'அளவுருக்களை உள்ளிடுங்கள்',
+    how_step1_desc: 'மண் ஊட்டச்சத்து மதிப்புகள் (N, P, K), pH நிலை, வெப்பநிலை, ஈரப்பதம் மற்றும் மழையளவை உள்ளிடுங்கள். உங்கள் இருப்பிடத்திலிருந்து வானிலை தரவை தானாக நிரப்புங்கள்.',
+    how_step2_title: 'AI மாதிரிகள் பகுப்பாய்வு',
+    how_step2_desc: 'ரேண்டம் ஃபாரஸ்ட், டெசிஷன் ட்ரீ அல்லது XGBoost இல் ஒன்றை தேர்வு செய்யுங்கள். ஒவ்வொரு மாதிரியும் ஆயிரக்கணக்கான வேளாண்மை தரவுகளுக்கு எதிராக செயலாக்குகிறது.',
+    how_step3_title: 'முழு அறிக்கையைப் பெறுங்கள்',
+    how_step3_desc: 'நம்பிக்கை மதிப்பெண்கள், விளைச்சல் கணிப்புகள், உர ஆலோசனை, ஆபத்து நிலைகள் மற்றும் அம்ச முக்கியத்துவத்துடன் தரவரிசைப்படுத்தப்பட்ட பயிர்களைப் பெறுங்கள்.',
+    // Footer
+    footer_desc: 'ஸ்மார்ட் பயிர் பரிந்துரை அமைப்பு · ML & ♥ மூலம் உருவாக்கப்பட்டது',
+    footer_stats: '22 பயிர்கள் · 3 ML மாதிரிகள் · வானிலை API · அறிக்கை ஏற்றுமதி',
+    // Dynamic content
+    summary_nitrogen: 'நைட்ரஜன்', summary_phosphorus: 'பாஸ்பரஸ்', summary_potassium: 'பொட்டாசியம்',
+    summary_ph: 'pH', summary_temp: 'வெப்பநிலை (°C)', summary_humidity: 'ஈரப்பதம்', summary_rainfall: 'மழையளவு (mm)',
+    summary_crops_found: 'பயிர்கள் கண்டறியப்பட்டன',
+    fi_title: '📊 அம்ச முக்கியத்துவம் — ஏன் இந்த பயிர்கள்?',
+    model_label: 'மாதிரி', accuracy_label: 'துல்லியம்', top_crops_shown: 'முதல் {n} பயிர்கள் காட்டப்படுகின்றன',
+    // Compare table rows
+    ct_type: 'வகை', ct_season: 'பருவம்', ct_growing: 'வளரும் காலம்', ct_water: 'நீர் தேவை',
+    ct_yield: 'மதிப்பிடப்பட்ட விளைச்சல் (கிலோ/ஏக்கர்)', ct_n: 'N வரம்பு', ct_p: 'P வரம்பு', ct_k: 'K வரம்பு',
+    ct_ph: 'pH வரம்பு', ct_temp: 'வெப்பநிலை வரம்பு (°C)', ct_diseases: 'நோய்கள்',
+    ct_suitability: 'பொருத்த மதிப்பெண்', ct_urea: 'யூரியா (கிலோ/ஏக்கர்)', ct_dap: 'DAP (கிலோ/ஏக்கர்)', ct_mop: 'MOP (கிலோ/ஏக்கர்)',
+    select_a_crop: 'பயிரை தேர்வு செய்யவும்',
+    // Notifications
+    csv_downloaded: '📄 CSV அறிக்கை பதிவிறக்கம்!',
+    print_opened: '🖨️ அச்சு உரையாடல் திறக்கப்பட்டது',
+    run_prediction_first: 'முதலில் கணிப்பை இயக்கவும்!',
+    alert_fill_all: 'கணிப்பதற்கு முன் அனைத்து 7 அளவுருக்களையும் நிரப்பவும்.',
+    alert_city_name: 'வானிலை தரவைப் பெற நகரப் பெயரை உள்ளிடவும்.',
+    alert_something_wrong: 'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும்.',
+    notify_weather_error: '❌ வானிலையைப் பெற முடியவில்லை. நகரப் பெயரை சரிபார்க்கவும்.',
+    notify_select_option: '⚠️ தொடர்வதற்கு முன் ஒரு விருப்பத்தை தேர்ந்தெடுக்கவும்.',
+    notify_guided_complete: '🌾 ஸ்மார்ட் விவசாய உதவியாளர் — கணிப்பு முடிந்தது!',
+    notify_guided_missing: '⚠️ அனைத்து 7 கேள்விகளுக்கும் பதிலளிக்கவும். படி {step} விடுபட்டுள்ளது.',
   }
 };
 
@@ -160,9 +344,28 @@ function switchLanguage(lang) {
     if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
   });
 
+  // Update all data-i18n-placeholder elements
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
+
   // Re-render results if they exist
   if (appState.lastResults && appState.lastInputs) {
     renderResults(appState.lastInputs, appState.lastResults);
+  }
+
+  // Re-render history
+  renderHistory();
+
+  // Re-populate compare dropdowns with translated labels
+  populateCompareDropdowns();
+
+  // Re-render compare table if crops were already compared
+  const c1 = document.getElementById('compareCrop1');
+  const c2 = document.getElementById('compareCrop2');
+  if (c1 && c2 && c1.value && c2.value) {
+    compareCrops();
   }
 
   // Update voice assistant language label
@@ -697,8 +900,8 @@ function renderProfitPrediction(inputs, results) {
         <div class="profit-card-header">
           <span class="profit-card-emoji">${c.emoji}</span>
           <div>
-            <div class="profit-card-name">${c.name}</div>
-            <div class="profit-card-type">${c.type}</div>
+            <div class="profit-card-name">${getCropName(r.crop)}</div>
+            <div class="profit-card-type">${getCropType(r.crop)}</div>
           </div>
         </div>
         <div class="profit-metrics">
@@ -937,6 +1140,80 @@ const cropData = {
   },
 };
 
+// ═══ Crop Name & Type Translations (Tamil) ═══
+const cropTranslations = {
+  rice:       { ta: 'அரிசி' },
+  wheat:      { ta: 'கோதுமை' },
+  maize:      { ta: 'மக்காச்சோளம்' },
+  cotton:     { ta: 'பருத்தி' },
+  sugarcane:  { ta: 'கரும்பு' },
+  chickpea:   { ta: 'கொண்டைக்கடலை' },
+  mango:      { ta: 'மாம்பழம்' },
+  banana:     { ta: 'வாழைப்பழம்' },
+  grapes:     { ta: 'திராட்சை' },
+  apple:      { ta: 'ஆப்பிள்' },
+  lentil:     { ta: 'பயறு' },
+  jute:       { ta: 'சணல்' },
+  coconut:    { ta: 'தேங்காய்' },
+  coffee:     { ta: 'காபி' },
+  potato:     { ta: 'உருளைக்கிழங்கு' },
+  tomato:     { ta: 'தக்காளி' },
+  onion:      { ta: 'வெங்காயம்' },
+  soybean:    { ta: 'சோயாபீன்' },
+  groundnut:  { ta: 'வேர்க்கடலை' },
+  mustard:    { ta: 'கடுகு' },
+  watermelon: { ta: 'தர்பூசணி' },
+  papaya:     { ta: 'பப்பாளி' },
+};
+
+const cropTypeTranslations = {
+  'Grain': 'தானியம்',
+  'Fiber': 'நார்',
+  'Cash Crop': 'பணப்பயிர்',
+  'Pulse': 'பருப்பு',
+  'Fruit': 'பழம்',
+  'Plantation': 'தோட்டப்பயிர்',
+  'Vegetable': 'காய்கறி',
+  'Oilseed': 'எண்ணெய் வித்து',
+};
+
+const cropSeasonTranslations = {
+  'Kharif (Jun–Nov)': 'கரிப் (ஜூன்–நவ)',
+  'Kharif (Jun–Oct)': 'கரிப் (ஜூன்–அக்)',
+  'Rabi (Nov–Mar)': 'ரபி (நவ–மார்)',
+  'Rabi (Oct–Mar)': 'ரபி (அக்–மார்)',
+  'Rabi (Oct–Feb)': 'ரபி (அக்–பிப்)',
+  'Kharif + Rabi': 'கரிப் + ரபி',
+  'Tropical (Year-round)': 'வெப்பமண்டலம் (ஆண்டு முழுவதும்)',
+  'Summer (Mar–Jun)': 'கோடை (மார்–ஜூன்)',
+  'Perennial': 'பல்லாண்டு',
+  'Perennial (3–5 years)': 'பல்லாண்டு (3–5 ஆண்டுகள்)',
+};
+
+// Helper: get translated crop name
+function getCropName(key) {
+  const c = cropData[key];
+  if (!c) return key;
+  if (currentLang === 'ta' && cropTranslations[key]) return cropTranslations[key].ta;
+  return c.name;
+}
+
+// Helper: get translated crop type
+function getCropType(key) {
+  const c = cropData[key];
+  if (!c) return '';
+  if (currentLang === 'ta' && cropTypeTranslations[c.type]) return cropTypeTranslations[c.type];
+  return c.type;
+}
+
+// Helper: get translated crop season
+function getCropSeason(key) {
+  const c = cropData[key];
+  if (!c) return '';
+  if (currentLang === 'ta' && cropSeasonTranslations[c.season]) return cropSeasonTranslations[c.season];
+  return c.season;
+}
+
 // ── Region Data ──
 const regionData = {
   'north-india':   { name: 'North India (Punjab, Haryana, UP)', t: 25, h: 55, r: 80, crops: ['wheat','rice','sugarcane','mustard','potato'] },
@@ -1014,7 +1291,7 @@ async function fetchWeather() {
   const city = cityInput ? cityInput.value.trim() : '';
 
   if (!city) {
-    alert('Please enter a city name to fetch weather data.');
+    alert(t('alert_city_name'));
     return;
   }
 
@@ -1046,7 +1323,7 @@ async function fetchWeather() {
       showNotification(`✅ Live weather loaded for ${data.name}`);
     }
   } catch (err) {
-    showNotification('❌ Could not fetch weather. Check city name.', 'error');
+    showNotification(t('notify_weather_error'), 'error');
   } finally {
     btn.textContent = origText;
     btn.disabled = false;
@@ -1269,7 +1546,7 @@ async function predictCrop() {
     };
 
     const missing = Object.values(inputs).some(v => v === '');
-    if (missing) { alert('Please fill in all 7 parameters before predicting.'); return; }
+    if (missing) { alert(t('alert_fill_all')); return; }
 
     btn.classList.add('loading');
     btn.disabled = true;
@@ -1291,7 +1568,7 @@ async function predictCrop() {
 
   } catch (err) {
     console.error('Prediction error:', err);
-    alert('Something went wrong during prediction. Please try again.');
+    alert(t('alert_something_wrong'));
     if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
   }
 }
@@ -1301,21 +1578,21 @@ function renderResults(inputs, results) {
   // Model badge
   const modelBadgeHTML = `
     <div class="model-badge">
-      🤖 Model: <strong>${getModelDisplayName()}</strong> &nbsp;|&nbsp; Accuracy: <strong>${getModelAccuracy()}</strong>
-      &nbsp;|&nbsp; Top ${results.length} crops shown
+      🤖 ${t('model_label')}: <strong>${getModelDisplayName()}</strong> &nbsp;|&nbsp; ${t('accuracy_label')}: <strong>${getModelAccuracy()}</strong>
+      &nbsp;|&nbsp; ${t('top_crops_shown').replace('{n}', results.length)}
     </div>
   `;
 
   // Input summary
   document.getElementById('inputSummary').innerHTML = `
-    <div class="summary-item"><div class="summary-val">${inputs.n||'—'}</div><div class="summary-key">Nitrogen</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.p||'—'}</div><div class="summary-key">Phosphorus</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.k||'—'}</div><div class="summary-key">Potassium</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.ph||'—'}</div><div class="summary-key">pH</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.t||'—'}°</div><div class="summary-key">Temp (°C)</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.h||'—'}%</div><div class="summary-key">Humidity</div></div>
-    <div class="summary-item"><div class="summary-val">${inputs.r||'—'}</div><div class="summary-key">Rainfall (mm)</div></div>
-    <div class="summary-item"><div class="summary-val" style="color:var(--leaf)">${results.length}</div><div class="summary-key">Crops found</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.n||'—'}</div><div class="summary-key">${t('summary_nitrogen')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.p||'—'}</div><div class="summary-key">${t('summary_phosphorus')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.k||'—'}</div><div class="summary-key">${t('summary_potassium')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.ph||'—'}</div><div class="summary-key">${t('summary_ph')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.t||'—'}°</div><div class="summary-key">${t('summary_temp')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.h||'—'}%</div><div class="summary-key">${t('summary_humidity')}</div></div>
+    <div class="summary-item"><div class="summary-val">${inputs.r||'—'}</div><div class="summary-key">${t('summary_rainfall')}</div></div>
+    <div class="summary-item"><div class="summary-val" style="color:var(--leaf)">${results.length}</div><div class="summary-key">${t('summary_crops_found')}</div></div>
   `;
 
   // Feature Importance
@@ -1331,7 +1608,7 @@ function renderResults(inputs, results) {
   }).join('');
 
   document.getElementById('featureImportance').innerHTML = `
-    <div class="fi-title">📊 Feature Importance — Why these crops?</div>
+    <div class="fi-title">${t('fi_title')}</div>
     ${modelBadgeHTML}
     ${fiHTML}
   `;
@@ -1350,9 +1627,9 @@ function renderResults(inputs, results) {
     return `
       <div class="crop-card ${i === 0 ? 'top-pick' : ''} ${cardColor}">
         <span class="crop-emoji">${c.emoji}</span>
-        <div class="crop-name">${c.name}</div>
-        <div class="crop-type">${c.type}</div>
-        <div class="crop-season">📅 ${c.season}</div>
+        <div class="crop-name">${getCropName(r.crop)}</div>
+        <div class="crop-type">${getCropType(r.crop)}</div>
+        <div class="crop-season">📅 ${getCropSeason(r.crop)}</div>
 
         <div class="confidence-bar-wrap">
           <div class="confidence-label">
@@ -1414,12 +1691,12 @@ function renderResults(inputs, results) {
 // ═══ Comparison ═══
 function populateCompareDropdowns() {
   const crops = Object.keys(cropData);
-  const options = crops.map(c => `<option value="${c}">${cropData[c].emoji} ${cropData[c].name}</option>`).join('');
+  const options = crops.map(c => `<option value="${c}">${cropData[c].emoji} ${getCropName(c)}</option>`).join('');
   ['compareCrop1', 'compareCrop2', 'compareCrop3'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       const current = el.value;
-      el.innerHTML = '<option value="">Select a crop</option>' + options;
+      el.innerHTML = `<option value="">${t('select_a_crop')}</option>` + options;
       if (current) el.value = current;
     }
   });
@@ -1432,7 +1709,7 @@ function compareCrops() {
 
   const selected = [crop1, crop2, crop3].filter(Boolean);
   if (selected.length < 2) {
-    alert('Please select at least 2 crops to compare.');
+    alert(t('compare_select_2'));
     return;
   }
 
@@ -1440,31 +1717,31 @@ function compareCrops() {
   const inputs = appState.lastInputs || { n:90, p:42, k:43, ph:6.5, t:28, h:80, r:200 };
   const scorer = getModelScorer();
 
-  const headers = selected.map(c => `<th>${cropData[c].emoji} ${cropData[c].name}</th>`).join('');
+  const headers = selected.map(c => `<th>${cropData[c].emoji} ${getCropName(c)}</th>`).join('');
   const rows = [
-    ['Type', ...selected.map(c => cropData[c].type)],
-    ['Season', ...selected.map(c => cropData[c].season)],
-    ['Growing Period', ...selected.map(c => cropData[c].growingPeriod)],
-    ['Water Requirement', ...selected.map(c => cropData[c].waterReq)],
-    ['Est. Yield (kg/acre)', ...selected.map(c => {
+    [t('ct_type'), ...selected.map(c => cropData[c].type)],
+    [t('ct_season'), ...selected.map(c => cropData[c].season)],
+    [t('ct_growing'), ...selected.map(c => cropData[c].growingPeriod)],
+    [t('ct_water'), ...selected.map(c => cropData[c].waterReq)],
+    [t('ct_yield'), ...selected.map(c => {
       const s = scorer(inputs, c);
       const y = predictYield(s, c);
       return y.estimated;
     })],
-    ['N Range', ...selected.map(c => `${cropData[c].base.n[0]}–${cropData[c].base.n[1]}`)],
-    ['P Range', ...selected.map(c => `${cropData[c].base.p[0]}–${cropData[c].base.p[1]}`)],
-    ['K Range', ...selected.map(c => `${cropData[c].base.k[0]}–${cropData[c].base.k[1]}`)],
-    ['pH Range', ...selected.map(c => `${cropData[c].base.ph[0]}–${cropData[c].base.ph[1]}`)],
-    ['Temp Range (°C)', ...selected.map(c => `${cropData[c].base.t[0]}–${cropData[c].base.t[1]}`)],
-    ['Diseases', ...selected.map(c => cropData[c].diseases.join(', '))],
-    ['Suitability Score', ...selected.map(c => {
+    [t('ct_n'), ...selected.map(c => `${cropData[c].base.n[0]}–${cropData[c].base.n[1]}`)],
+    [t('ct_p'), ...selected.map(c => `${cropData[c].base.p[0]}–${cropData[c].base.p[1]}`)],
+    [t('ct_k'), ...selected.map(c => `${cropData[c].base.k[0]}–${cropData[c].base.k[1]}`)],
+    [t('ct_ph'), ...selected.map(c => `${cropData[c].base.ph[0]}–${cropData[c].base.ph[1]}`)],
+    [t('ct_temp'), ...selected.map(c => `${cropData[c].base.t[0]}–${cropData[c].base.t[1]}`)],
+    [t('ct_diseases'), ...selected.map(c => cropData[c].diseases.join(', '))],
+    [t('ct_suitability'), ...selected.map(c => {
       const s = scorer(inputs, c);
       const pct = Math.round(Math.min(0.99, 0.60 + s * 0.39) * 100);
       return `${pct}%`;
     })],
-    ['Urea (kg/acre)', ...selected.map(c => getFertilizerRec(inputs, c).urea)],
-    ['DAP (kg/acre)', ...selected.map(c => getFertilizerRec(inputs, c).dap)],
-    ['MOP (kg/acre)', ...selected.map(c => getFertilizerRec(inputs, c).mop)],
+    [t('ct_urea'), ...selected.map(c => getFertilizerRec(inputs, c).urea)],
+    [t('ct_dap'), ...selected.map(c => getFertilizerRec(inputs, c).dap)],
+    [t('ct_mop'), ...selected.map(c => getFertilizerRec(inputs, c).mop)],
   ];
 
   const rowsHTML = rows.map(row => {
@@ -1473,7 +1750,7 @@ function compareCrops() {
 
   wrap.innerHTML = `
     <table class="compare-table">
-      <thead><tr><th>Parameter</th>${headers}</tr></thead>
+      <thead><tr><th>${t('compare_param')}</th>${headers}</tr></thead>
       <tbody>${rowsHTML}</tbody>
     </table>
   `;
@@ -1504,7 +1781,7 @@ function renderDashboardCharts(results, inputs) {
     appState.charts.bar = new Chart(barCtx, {
       type: 'bar',
       data: {
-        labels: allCrops.map(c => cropData[c].name),
+        labels: allCrops.map(c => getCropName(c)),
         datasets: [{
           label: 'Suitability %',
           data: allScores,
@@ -1530,7 +1807,8 @@ function renderDashboardCharts(results, inputs) {
   if (pieCtx) {
     const typeCounts = {};
     Object.values(cropData).forEach(c => {
-      typeCounts[c.type] = (typeCounts[c.type] || 0) + 1;
+      const translatedType = (currentLang === 'ta' && cropTypeTranslations[c.type]) ? cropTypeTranslations[c.type] : c.type;
+      typeCounts[translatedType] = (typeCounts[translatedType] || 0) + 1;
     });
     const pieColors = ['#5c8f3a', '#8bc34a', '#f4c842', '#d4692a', '#e74c3c', '#3498db', '#9b59b6', '#1abc9c'];
 
@@ -1583,16 +1861,17 @@ function renderHistory() {
   const history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
 
   if (history.length === 0) {
-    container.innerHTML = '<div class="history-empty">📭 No predictions yet. Start by analysing your farm data!</div>';
+    container.innerHTML = `<div class="history-empty">${t('history_empty')}</div>`;
     return;
   }
 
+  const locale = currentLang === 'ta' ? 'ta-IN' : 'en-IN';
   container.innerHTML = history.map((h, i) => {
     const date = new Date(h.date);
-    const dateStr = date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-    const timeStr = date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = date.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
+    const timeStr = date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
     const cropsHTML = h.results.map(r =>
-      `<span class="history-crop-chip">${cropData[r.crop]?.emoji || '🌱'} ${r.crop} (${r.score}%)</span>`
+      `<span class="history-crop-chip">${cropData[r.crop]?.emoji || '🌱'} ${getCropName(r.crop)} (${r.score}%)</span>`
     ).join('');
 
     return `
@@ -1603,7 +1882,7 @@ function renderHistory() {
         </div>
         <div class="history-crops">${cropsHTML}</div>
         <div class="history-actions">
-          <button class="btn-sm btn-outline" onclick="reloadPrediction(${i})">🔄 Reload</button>
+          <button class="btn-sm btn-outline" onclick="reloadPrediction(${i})">${t('history_reload')}</button>
         </div>
       </div>
     `;
@@ -1623,22 +1902,22 @@ function reloadPrediction(index) {
     document.getElementById('rainfall').value = h.inputs.r;
     if (h.model) selectModel(h.model);
     navTo('predict');
-    showNotification('📋 Previous inputs loaded. Click Predict to re-analyse!');
+    showNotification(t('history_loaded'));
   }
 }
 
 function clearHistory() {
-  if (confirm('Clear all prediction history?')) {
+  if (confirm(t('history_confirm_clear'))) {
     localStorage.removeItem(CONFIG.HISTORY_KEY);
     renderHistory();
-    showNotification('🗑️ History cleared');
+    showNotification(t('history_cleared'));
   }
 }
 
 // ═══ Export ═══
 function exportCSV() {
   if (!appState.lastResults || !appState.lastInputs) {
-    alert('Run a prediction first!');
+    alert(t('run_prediction_first'));
     return;
   }
   const inputs = appState.lastInputs;
@@ -1657,7 +1936,7 @@ function exportCSV() {
     const pct = Math.round(r.score * 100);
     const yld = predictYield(r.rawScore, r.crop);
     const fert = getFertilizerRec(inputs, r.crop);
-    csv += `${c.name},${c.type},${pct},${c.season},${c.growingPeriod},${c.waterReq},${yld.estimated},${fert.urea},${fert.dap},${fert.mop}\n`;
+    csv += `${getCropName(r.crop)},${getCropType(r.crop)},${pct},${getCropSeason(r.crop)},${c.growingPeriod},${c.waterReq},${yld.estimated},${fert.urea},${fert.dap},${fert.mop}\n`;
   });
 
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -1667,13 +1946,13 @@ function exportCSV() {
   a.download = `CropAI_Report_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  showNotification('📄 CSV report downloaded!');
+  showNotification(t('csv_downloaded'));
 }
 
 function exportPrint() {
-  if (!appState.lastResults) { alert('Run a prediction first!'); return; }
+  if (!appState.lastResults) { alert(t('run_prediction_first')); return; }
   window.print();
-  showNotification('🖨️ Print dialog opened');
+  showNotification(t('print_opened'));
 }
 
 // ═══ Smart Farmer Assistant (Guided Mode) ═══
@@ -1716,19 +1995,22 @@ function updateGuidedUI() {
 
   // Update step label
   const stepLabel = document.getElementById('guidedStepLabel');
-  if (stepLabel) stepLabel.textContent = `Step ${step} of ${total}`;
+  if (stepLabel) stepLabel.textContent = t('guided_step_of').replace('{current}', step).replace('{total}', total);
 
   // Show/hide prev button
   const prevBtn = document.getElementById('guidedPrevBtn');
-  if (prevBtn) prevBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+  if (prevBtn) {
+    prevBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+    prevBtn.textContent = t('guided_prev');
+  }
 
   // Update next button text on last step
   const nextBtn = document.getElementById('guidedNextBtn');
   if (nextBtn) {
     if (step === total) {
-      nextBtn.textContent = '✨ See Estimated Values';
+      nextBtn.textContent = '✨ ' + t('guided_preview_title').replace('🧠 ', '');
     } else {
-      nextBtn.textContent = 'Next →';
+      nextBtn.textContent = t('guided_next');
     }
   }
 
@@ -1742,7 +2024,7 @@ function guidedNext() {
   const stepName = getGuidedRadioName(appState.guidedStep);
   const selected = document.querySelector(`input[name="${stepName}"]:checked`);
   if (!selected) {
-    showNotification('⚠️ Please select an option before continuing.', 'error');
+    showNotification(t('notify_select_option'), 'error');
     return;
   }
 
@@ -1828,7 +2110,7 @@ function showGuidedPreview() {
   for (let i = 1; i <= 7; i++) {
     const name = getGuidedRadioName(i);
     if (!document.querySelector(`input[name="${name}"]:checked`)) {
-      showNotification(`⚠️ Please answer all 7 questions. Missing step ${i}.`, 'error');
+      showNotification(t('notify_guided_missing').replace('{step}', i), 'error');
       appState.guidedStep = i;
       updateGuidedUI();
       return;
@@ -1840,13 +2122,13 @@ function showGuidedPreview() {
   const grid = document.getElementById('guidedPreviewGrid');
 
   const items = [
-    { key: 'Nitrogen', val: values.n, unit: '' },
-    { key: 'Phosphorus', val: values.p, unit: '' },
-    { key: 'Potassium', val: values.k, unit: '' },
-    { key: 'pH', val: values.ph, unit: '' },
-    { key: 'Temp', val: values.t, unit: '°C' },
-    { key: 'Humidity', val: values.h, unit: '%' },
-    { key: 'Rainfall', val: values.r, unit: 'mm' },
+    { key: t('summary_nitrogen'), val: values.n, unit: '' },
+    { key: t('summary_phosphorus'), val: values.p, unit: '' },
+    { key: t('summary_potassium'), val: values.k, unit: '' },
+    { key: t('summary_ph'), val: values.ph, unit: '' },
+    { key: t('summary_temp'), val: values.t, unit: '°C' },
+    { key: t('summary_humidity'), val: values.h, unit: '%' },
+    { key: t('summary_rainfall'), val: values.r, unit: 'mm' },
   ];
 
   grid.innerHTML = items.map(item => `
@@ -1893,7 +2175,7 @@ async function guidedPredict() {
 
     const results = ruleBasedCrop(inputs);
 
-    if (btn) { btn.textContent = '🌱 Predict Best Crops'; btn.disabled = false; }
+    if (btn) { btn.textContent = t('predict_btn'); btn.disabled = false; }
 
     appState.lastResults = results;
     appState.lastInputs = inputs;
@@ -1902,12 +2184,12 @@ async function guidedPredict() {
     saveToHistory(inputs, results);
     populateCompareDropdowns();
 
-    showNotification('🌾 Smart Farmer Assistant — Prediction complete!');
+    showNotification(t('notify_guided_complete'));
 
   } catch (err) {
     console.error('Guided prediction error:', err);
-    alert('Something went wrong. Please try again.');
-    if (btn) { btn.textContent = '🌱 Predict Best Crops'; btn.disabled = false; }
+    alert(t('alert_something_wrong'));
+    if (btn) { btn.textContent = t('predict_btn'); btn.disabled = false; }
   }
 }
 

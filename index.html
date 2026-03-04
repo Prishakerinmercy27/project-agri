@@ -52,19 +52,19 @@
     <div class="hero-stats">
       <div class="stat-item">
         <div class="stat-num">22+</div>
-        <div class="stat-label">Crop varieties</div>
+        <div class="stat-label" data-i18n="stat_crops">Crop varieties</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">3</div>
-        <div class="stat-label">ML Models</div>
+        <div class="stat-label" data-i18n="stat_models">ML Models</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">98%</div>
-        <div class="stat-label">Model accuracy</div>
+        <div class="stat-label" data-i18n="stat_accuracy">Model accuracy</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">7</div>
-        <div class="stat-label">Parameters analysed</div>
+        <div class="stat-label" data-i18n="stat_params">Parameters analysed</div>
       </div>
     </div>
   </div>
@@ -88,19 +88,19 @@
       <div class="param-list">
         <div class="param-item">
           <div class="param-icon">🧪</div>
-          <div><strong style="color:var(--cream)">Soil Nutrients</strong> — N, P, K values indicate fertility</div>
+          <div><strong style="color:var(--cream)" data-i18n="param_nutrients_title">Soil Nutrients</strong> — <span data-i18n="param_nutrients_desc">N, P, K values indicate fertility</span></div>
         </div>
         <div class="param-item">
           <div class="param-icon">⚗️</div>
-          <div><strong style="color:var(--cream)">Soil pH</strong> — Acidity level affects nutrient uptake</div>
+          <div><strong style="color:var(--cream)" data-i18n="param_ph_title">Soil pH</strong> — <span data-i18n="param_ph_desc">Acidity level affects nutrient uptake</span></div>
         </div>
         <div class="param-item">
           <div class="param-icon">🌡️</div>
-          <div><strong style="color:var(--cream)">Climate</strong> — Temperature, humidity & rainfall</div>
+          <div><strong style="color:var(--cream)" data-i18n="param_climate_title">Climate</strong> — <span data-i18n="param_climate_desc">Temperature, humidity & rainfall</span></div>
         </div>
         <div class="param-item">
           <div class="param-icon">📊</div>
-          <div><strong style="color:var(--cream)">AI Models</strong> — 3 models compared for best results</div>
+          <div><strong style="color:var(--cream)" data-i18n="param_models_title">AI Models</strong> — <span data-i18n="param_models_desc">3 models compared for best results</span></div>
         </div>
       </div>
     </div>
@@ -110,21 +110,21 @@
       <div class="mode-toggle-wrap">
         <button class="mode-btn active" id="labModeBtn" onclick="switchMode('lab')">
           <span class="mode-icon">🔬</span>
-          <span class="mode-label">Manual Lab Mode</span>
-          <span class="mode-desc">Enter exact soil test values</span>
+          <span class="mode-label" data-i18n="mode_lab">Manual Lab Mode</span>
+          <span class="mode-desc" data-i18n="mode_lab_desc">Enter exact soil test values</span>
         </button>
         <button class="mode-btn" id="guidedModeBtn" onclick="switchMode('guided')">
           <span class="mode-icon">🌾</span>
-          <span class="mode-label">Smart Farmer Assistant</span>
-          <span class="mode-desc">Answer simple field questions</span>
+          <span class="mode-label" data-i18n="mode_guided">Smart Farmer Assistant</span>
+          <span class="mode-desc" data-i18n="mode_guided_desc">Answer simple field questions</span>
         </button>
       </div>
 
       <!-- ═══ GUIDED MODE ═══ -->
       <div id="guidedMode" class="guided-mode" style="display:none">
         <div class="guided-header">
-          <div class="guided-badge">🧠 AI Field Diagnosis</div>
-          <p class="guided-subtitle">Answer simple questions about your field — we'll estimate soil values using AI</p>
+          <div class="guided-badge" data-i18n="guided_badge">🧠 AI Field Diagnosis</div>
+          <p class="guided-subtitle" data-i18n="guided_subtitle">Answer simple questions about your field — we'll estimate soil values using AI</p>
           <div class="guided-progress">
             <div class="guided-progress-bar" id="guidedProgressBar"></div>
           </div>
@@ -419,19 +419,19 @@
       <!-- ═══ LAB MODE (Original Form) ═══ -->
       <div id="labMode">
       <!-- Location & Weather Auto-fill -->
-      <div class="form-section-title">📍 Location & Weather</div>
+      <div class="form-section-title" data-i18n="form_location">📍 Location & Weather</div>
       <div class="location-weather-bar">
         <select id="regionSelect">
-          <option value="">Select Region</option>
-          <option value="north-india">North India (Punjab, Haryana, UP)</option>
-          <option value="south-india">South India (TN, Karnataka, Kerala)</option>
-          <option value="east-india">East India (WB, Odisha, Bihar)</option>
-          <option value="west-india">West India (Maharashtra, Gujarat)</option>
-          <option value="central-india">Central India (MP, Chhattisgarh)</option>
-          <option value="northeast">Northeast India (Assam, Meghalaya)</option>
+          <option value="" data-i18n="select_region">Select Region</option>
+          <option value="north-india" data-i18n="region_north">North India (Punjab, Haryana, UP)</option>
+          <option value="south-india" data-i18n="region_south">South India (TN, Karnataka, Kerala)</option>
+          <option value="east-india" data-i18n="region_east">East India (WB, Odisha, Bihar)</option>
+          <option value="west-india" data-i18n="region_west">West India (Maharashtra, Gujarat)</option>
+          <option value="central-india" data-i18n="region_central">Central India (MP, Chhattisgarh)</option>
+          <option value="northeast" data-i18n="region_northeast">Northeast India (Assam, Meghalaya)</option>
         </select>
-        <input type="text" id="cityInput" placeholder="City name (e.g. Mumbai)">
-        <button class="weather-btn" onclick="fetchWeather()">🌤️ Auto-fill Weather</button>
+        <input type="text" id="cityInput" placeholder="City name (e.g. Mumbai)" data-i18n-placeholder="city_placeholder">
+        <button class="weather-btn" onclick="fetchWeather()" data-i18n="weather_btn">🌤️ Auto-fill Weather</button>
       </div>
 
       <!-- Soil Nutrients -->
@@ -517,16 +517,16 @@
       </div>
 
       <!-- ML Model Selection -->
-      <div class="form-section-title">🤖 ML Model</div>
+      <div class="form-section-title" data-i18n="form_model">🤖 ML Model</div>
       <div class="model-selector">
-        <button class="model-chip active" data-model="randomForest" onclick="selectModel('randomForest')">🌲 Random Forest</button>
-        <button class="model-chip" data-model="decisionTree" onclick="selectModel('decisionTree')">🌳 Decision Tree</button>
-        <button class="model-chip" data-model="xgboost" onclick="selectModel('xgboost')">⚡ XGBoost</button>
+        <button class="model-chip active" data-model="randomForest" onclick="selectModel('randomForest')">🌲 <span data-i18n="model_rf">Random Forest</span></button>
+        <button class="model-chip" data-model="decisionTree" onclick="selectModel('decisionTree')">🌳 <span data-i18n="model_dt">Decision Tree</span></button>
+        <button class="model-chip" data-model="xgboost" onclick="selectModel('xgboost')">⚡ <span data-i18n="model_xgb">XGBoost</span></button>
       </div>
 
       <button class="predict-btn" onclick="predictCrop()">
-        <span class="btn-text">🌱 Predict Best Crops</span>
-        <span class="btn-loader"><div class="spinner"></div> Analysing with AI…</span>
+        <span class="btn-text" data-i18n="predict_btn">🌱 Predict Best Crops</span>
+        <span class="btn-loader"><div class="spinner"></div> <span data-i18n="predict_loading">Analysing with AI…</span></span>
       </button>
       </div><!-- /labMode -->
     </div>
@@ -559,26 +559,26 @@
 
   <!-- Export & Action Buttons -->
   <div class="export-bar">
-    <button onclick="exportCSV()" class="btn-sm btn-outline">📄 Export CSV</button>
-    <button onclick="exportPrint()" class="btn-sm btn-outline">🖨️ Print Report</button>
-    <button onclick="navTo('compare')" class="btn-sm btn-outline">⚖️ Compare Crops</button>
-    <button onclick="resetForm()" class="btn-primary" style="padding:10px 24px;font-size:0.88rem">← Try Different Values</button>
+    <button onclick="exportCSV()" class="btn-sm btn-outline" data-i18n="export_csv">📄 Export CSV</button>
+    <button onclick="exportPrint()" class="btn-sm btn-outline" data-i18n="export_print">🖨️ Print Report</button>
+    <button onclick="navTo('compare')" class="btn-sm btn-outline" data-i18n="export_compare">⚖️ Compare Crops</button>
+    <button onclick="resetForm()" class="btn-primary" style="padding:10px 24px;font-size:0.88rem" data-i18n="export_retry">← Try Different Values</button>
   </div>
 </section>
 
 <!-- ═══ DASHBOARD ═══ -->
 <section id="dashboard" style="display:none">
   <div style="text-align:center;max-width:600px;margin:0 auto">
-    <div class="section-label" style="text-align:center">Analytics</div>
-    <h2 class="section-title" style="text-align:center">Crop Suitability Dashboard</h2>
+    <div class="section-label" style="text-align:center" data-i18n="dash_label">Analytics</div>
+    <h2 class="section-title" style="text-align:center" data-i18n="dash_title">Crop Suitability Dashboard</h2>
   </div>
   <div class="dashboard-grid">
     <div class="chart-card">
-      <h3>📊 Suitability Score — All 22 Crops</h3>
+      <h3 data-i18n="dash_chart_score">📊 Suitability Score — All 22 Crops</h3>
       <div style="height:500px"><canvas id="suitabilityChart"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>🥧 Crop Type Distribution</h3>
+      <h3 data-i18n="dash_chart_type">🥧 Crop Type Distribution</h3>
       <div style="height:300px"><canvas id="typeChart"></canvas></div>
     </div>
   </div>
@@ -587,34 +587,34 @@
 <!-- ═══ COMPARE ═══ -->
 <section id="compare">
   <div style="text-align:center;max-width:600px;margin:0 auto">
-    <div class="section-label" style="text-align:center">Comparison</div>
-    <h2 class="section-title" style="text-align:center">Compare crops side by side</h2>
-    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:32px">
+    <div class="section-label" style="text-align:center" data-i18n="compare_label">Comparison</div>
+    <h2 class="section-title" style="text-align:center" data-i18n="compare_title">Compare crops side by side</h2>
+    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:32px" data-i18n="compare_desc">
       Select 2 or 3 crops to compare their requirements, yield, and fertilizer needs.
     </p>
   </div>
   <div class="compare-controls" style="max-width:900px;margin:0 auto 24px">
-    <select id="compareCrop1"><option value="">Select Crop 1</option></select>
-    <select id="compareCrop2"><option value="">Select Crop 2</option></select>
-    <select id="compareCrop3"><option value="">Select Crop 3 (optional)</option></select>
-    <button class="btn-primary" style="padding:10px 24px;font-size:0.88rem" onclick="compareCrops()">⚖️ Compare</button>
+    <select id="compareCrop1"><option value="" data-i18n="select_crop_1">Select Crop 1</option></select>
+    <select id="compareCrop2"><option value="" data-i18n="select_crop_2">Select Crop 2</option></select>
+    <select id="compareCrop3"><option value="" data-i18n="select_crop_3">Select Crop 3 (optional)</option></select>
+    <button class="btn-primary" style="padding:10px 24px;font-size:0.88rem" onclick="compareCrops()" data-i18n="compare_btn">⚖️ Compare</button>
   </div>
   <div class="compare-table-wrap" id="compareTableWrap" style="max-width:900px;margin:0 auto">
-    <p style="text-align:center;color:#8a8a6a;padding:40px">Select crops above and click Compare to see a detailed side-by-side analysis.</p>
+    <p style="text-align:center;color:#8a8a6a;padding:40px" data-i18n="compare_empty">Select crops above and click Compare to see a detailed side-by-side analysis.</p>
   </div>
 </section>
 
 <!-- ═══ HISTORY ═══ -->
 <section id="history">
   <div style="text-align:center;max-width:600px;margin:0 auto">
-    <div class="section-label" style="text-align:center">Prediction History</div>
-    <h2 class="section-title" style="text-align:center">Your past analyses</h2>
-    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:16px">
+    <div class="section-label" style="text-align:center" data-i18n="history_label">Prediction History</div>
+    <h2 class="section-title" style="text-align:center" data-i18n="history_title">Your past analyses</h2>
+    <p style="text-align:center;color:#5a5a45;font-size:0.92rem;margin-bottom:16px" data-i18n="history_desc">
       Track your farm decisions over time. Reload any past prediction to re-analyse.
     </p>
   </div>
   <div class="history-list" id="historyList"></div>
-  <button class="history-clear-btn" onclick="clearHistory()">🗑️ Clear History</button>
+  <button class="history-clear-btn" onclick="clearHistory()" data-i18n="history_clear">🗑️ Clear History</button>
 </section>
 
 <!-- ═══ HOW IT WORKS ═══ -->
@@ -627,20 +627,20 @@
     <div class="how-card">
       <div class="how-step">01</div>
       <div class="how-icon">📋</div>
-      <h3>Enter Parameters</h3>
-      <p>Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall. Auto-fill weather data from your location or select a region.</p>
+      <h3 data-i18n="how_step1_title">Enter Parameters</h3>
+      <p data-i18n="how_step1_desc">Input soil nutrient values (N, P, K), pH level, temperature, humidity, and rainfall. Auto-fill weather data from your location or select a region.</p>
     </div>
     <div class="how-card">
       <div class="how-step">02</div>
       <div class="how-icon">🤖</div>
-      <h3>AI Models Analyse</h3>
-      <p>Choose from Random Forest, Decision Tree, or XGBoost. Each model processes your inputs against patterns from thousands of agricultural data points.</p>
+      <h3 data-i18n="how_step2_title">AI Models Analyse</h3>
+      <p data-i18n="how_step2_desc">Choose from Random Forest, Decision Tree, or XGBoost. Each model processes your inputs against patterns from thousands of agricultural data points.</p>
     </div>
     <div class="how-card">
       <div class="how-step">03</div>
       <div class="how-icon">🌾</div>
-      <h3>Get Full Report</h3>
-      <p>Receive ranked crops with confidence scores, yield predictions, fertilizer advice, risk levels, and feature importance. Export as CSV or compare crops side-by-side.</p>
+      <h3 data-i18n="how_step3_title">Get Full Report</h3>
+      <p data-i18n="how_step3_desc">Receive ranked crops with confidence scores, yield predictions, fertilizer advice, risk levels, and feature importance. Export as CSV or compare crops side-by-side.</p>
     </div>
   </div>
 </section>
@@ -648,8 +648,8 @@
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-logo">Crop<span>AI</span></div>
-  <p>Smart Crop Recommendation System · Built with ML &amp; ♥</p>
-  <p style="font-size:0.78rem">22 crops · 3 ML models · Weather API · Export reports</p>
+  <p data-i18n="footer_desc">Smart Crop Recommendation System · Built with ML &amp; ♥</p>
+  <p style="font-size:0.78rem" data-i18n="footer_stats">22 crops · 3 ML models · Weather API · Export reports</p>
 </footer>
 
 <!-- ═══ FLOATING VOICE ASSISTANT ═══ -->
