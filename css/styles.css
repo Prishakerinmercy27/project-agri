@@ -925,6 +925,18 @@ footer p { font-size: 0.82rem; }
   align-items: center; gap: 12px; flex-wrap: wrap;
 }
 
+/* Dark Mode Fix: Smart Farmer Assistant text visibility */
+body.dark-mode .guided-question-header h3 { color: #E6F4EA; }
+body.dark-mode .guided-opt-title { color: #E6F4EA; }
+body.dark-mode .guided-q-desc { color: rgba(230,244,234,0.5); }
+body.dark-mode .guided-opt-desc { color: rgba(230,244,234,0.4); }
+body.dark-mode .guided-subtitle { color: rgba(230,244,234,0.5); }
+body.dark-mode .guided-step-label { color: rgba(230,244,234,0.35); }
+body.dark-mode .guided-badge { color: #8bc34a; }
+body.dark-mode .guided-option-card { border-color: rgba(139,195,74,0.1); background: rgba(255,255,255,0.04); }
+body.dark-mode .guided-preview-key { color: rgba(230,244,234,0.4); }
+body.dark-mode .guided-preview-note { color: rgba(230,244,234,0.35); }
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 1024px) {
   .dashboard-grid { grid-template-columns: 1fr; }
