@@ -1562,28 +1562,59 @@ async function predictCrop() {
 
   try {
     const inputs = {
-      n: document.getElementById('nitrogen').value,
-      p: document.getElementById('phosphorus').value,
-      k: document.getElementById('potassium').value,
-      ph: document.getElementById('ph').value,
-      t: document.getElementById('temperature').value,
-      h: document.getElementById('humidity').value,
-      r: document.getElementById('rainfall').value,
+      n: parseFloat(document.getElementById('nitrogen').value),
+      p: parseFloat(document.getElementById('phosphorus').value),
+      k: parseFloat(document.getElementById('potassium').value),
+      ph: parseFloat(document.getElementById('ph').value),
+      t: parseFloat(document.getElementById('temperature').value),
+      h: parseFloat(document.getElementById('humidity').value),
+      r: parseFloat(document.getElementById('rainfall').value),
     };
 
-    const missing = Object.values(inputs).some(v => v === '');
+    const missing = Object.values(inputs).some(v => isNaN(v));
     if (missing) { alert(t('alert_fill_all')); return; }
 
     btn.classList.add('loading');
     btn.disabled = true;
 
-    // Simulate analysis delay
-    await new Promise(r => setTimeout(r, 1800));
+    // Call backend API
+    const apiResponse = await fetch('http://127.0.0.1:5000/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        N: inputs.n,
+        P: inputs.p,
+        K: inputs.k,
+        temperature: inputs.t,
+        humidity: inputs.h,
+        ph: inputs.ph,
+        rainfall: inputs.r,
+      })
+    });
 
-    const results = ruleBasedCrop(inputs);
+    const data = await apiResponse.json();
 
     btn.classList.remove('loading');
     btn.disabled = false;
+
+    if (!apiResponse.ok) {
+      console.error('API Error:', data);
+      alert(data.error || 'Prediction failed. Ensure backend is running at http://127.0.0.1:5000');
+      return;
+    }
+
+    const predictedCrop = data.crop || data.recommended_crop;
+    if (!predictedCrop || !cropData[predictedCrop]) {
+      alert('Backend returned an invalid crop prediction.');
+      return;
+    }
+
+    // Transform backend response to match frontend format
+    const results = [{
+      crop: predictedCrop,
+      score: 0.95,
+      rawScore: 0.95,
+    }];
 
     appState.lastResults = results;
     appState.lastInputs = inputs;
@@ -1592,9 +1623,16 @@ async function predictCrop() {
     saveToHistory(inputs, results);
     populateCompareDropdowns();
 
+    // Display additional AI insights
+    if (data.soil_health) {
+      console.log('Soil Health:', data.soil_health);
+      console.log('Estimated Profit:', data.estimated_profit);
+      console.log('Message:', data.message);
+    }
+
   } catch (err) {
     console.error('Prediction error:', err);
-    alert(t('alert_something_wrong'));
+    alert('Connection error: Make sure the backend is running at http://127.0.0.1:5000\n\nError: ' + err.message);
     if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
   }
 }
